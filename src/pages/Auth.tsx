@@ -238,15 +238,15 @@ const Auth = () => {
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <div className="text-center text-sm text-gray-600">
-              <a href="#" className="hover:text-medical-blue transition-colors">
+              <Link to="/forgot-password" className="hover:text-medical-blue transition-colors">
                 {translations.forgotPassword}
-              </a>
+              </Link>
             </div>
             <div className="text-center text-sm text-gray-600">
               {translations.dontHaveAccount}{' '}
-              <a href="#" className="text-medical-blue hover:underline">
+              <Link to="/register" className="text-medical-blue hover:underline">
                 {translations.createAccount}
-              </a>
+              </Link>
             </div>
           </CardFooter>
         </Card>
