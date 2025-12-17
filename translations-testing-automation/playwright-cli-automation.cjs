@@ -70,34 +70,75 @@ async function switchLanguage(page, langCode) {
 }
 
 async function highlightElement(page, selector, highlightAll = false) {
-  await page.evaluate(({ selector, highlightAll }) => {
-    // Remove any existing highlights
-    document.querySelectorAll('*').forEach(el => {
-      el.style.outline = '';
-      el.style.outlineOffset = '';
-      el.style.boxShadow = '';
-    });
+  const count = await page.evaluate(({ selector, highlightAll }) => {
+    // Remove any existing highlight overlays
+    document.querySelectorAll('.devin-highlight-overlay').forEach(el => el.remove());
 
     // Find elements matching the selector/text
     const allElements = document.querySelectorAll('*');
-    let count = 0;
+    const matchedElements = [];
+    
     allElements.forEach(el => {
+      // Skip script, style, and our overlay elements
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.classList.contains('devin-highlight-overlay')) {
+        return;
+      }
+      
       const directText = Array.from(el.childNodes)
         .filter(node => node.nodeType === Node.TEXT_NODE)
-        .map(node => node.textContent)
+        .map(node => node.textContent.trim())
         .join('');
       
-      if (directText.includes(selector) || (el.textContent && el.textContent.trim() === selector)) {
-        if (highlightAll || count === 0) {
-          el.style.outline = '3px solid red';
-          el.style.outlineOffset = '2px';
-          el.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.5)';
-          count++;
+      const fullText = el.textContent ? el.textContent.trim() : '';
+      
+      // Check if this element directly contains the text (not just via children)
+      if (directText.includes(selector) || fullText === selector) {
+        // Prefer elements that are visible and have a bounding box
+        const rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          matchedElements.push({ el, rect, directMatch: directText.includes(selector) });
         }
       }
     });
-    return count;
+    
+    // Sort to prefer direct text matches and smaller (more specific) elements
+    matchedElements.sort((a, b) => {
+      if (a.directMatch && !b.directMatch) return -1;
+      if (!a.directMatch && b.directMatch) return 1;
+      return (a.rect.width * a.rect.height) - (b.rect.width * b.rect.height);
+    });
+    
+    // Create overlay boxes for matched elements
+    const elementsToHighlight = highlightAll ? matchedElements : matchedElements.slice(0, 1);
+    
+    elementsToHighlight.forEach((item, index) => {
+      const rect = item.el.getBoundingClientRect();
+      const overlay = document.createElement('div');
+      overlay.className = 'devin-highlight-overlay';
+      overlay.style.cssText = `
+        position: fixed;
+        top: ${rect.top - 3}px;
+        left: ${rect.left - 3}px;
+        width: ${rect.width + 6}px;
+        height: ${rect.height + 6}px;
+        border: 3px solid red;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        pointer-events: none;
+        z-index: 999999;
+        box-sizing: border-box;
+      `;
+      document.body.appendChild(overlay);
+    });
+    
+    return elementsToHighlight.length;
   }, { selector, highlightAll });
+  
+  console.log(`  Highlighted ${count} element(s) for "${selector}"`);
+  
+  // Wait for paint
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  
+  return count;
 }
 
 async function runTestCase(browser, testCase, index) {
