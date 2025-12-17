@@ -1,0 +1,11 @@
+Screen/Page,Section,String,Language,Misc
+Dashboard,Header,MiniMed Dashboard,Spanish,Highlight logo text
+Dashboard,Sidebar,Overview,French,Highlight active menu item
+Dashboard,Sidebar,Glucose Monitoring,German,Highlight menu item
+Dashboard,Sidebar,Insulin Management,Spanish,Highlight menu item
+Dashboard,Sidebar,Device Status,French,Highlight menu item
+Dashboard,Sidebar,Reports,German,Highlight menu item
+Dashboard,Sidebar,Settings,Spanish,Highlight menu item
+Dashboard,User Menu,My Account,French,Highlight dropdown label
+Dashboard,User Menu,Profile,German,Highlight menu item
+Dashboard,User Menu,Sign out,Spanish,Highlight menu item

@@ -1,0 +1,11 @@
+Screen/Page,Section,String,Language,Misc
+Auth,Header,Back to Home,Spanish,Highlight link text
+Auth,Login Card,Welcome to MiniMed,French,Highlight card title
+Auth,Login Card,Sign in to access your diabetes management dashboard,German,Highlight description text
+Auth,Login Form,Email,Spanish,Highlight label
+Auth,Login Form,Password,French,Highlight label
+Auth,Login Form,Remember me,German,Highlight checkbox label
+Auth,Login Form,Sign In,Spanish,Highlight button only
+Auth,Demo Section,Demo Patient Account,French,Highlight button text
+Auth,Demo Section,Demo Healthcare Provider,German,Highlight button text
+Auth,Footer,Don't have an account?,Spanish,Highlight text only

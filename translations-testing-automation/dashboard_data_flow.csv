@@ -1,0 +1,11 @@
+Screen/Page,Section,String,Language,Misc
+Dashboard,Stats Grid,Current Glucose,Spanish,Highlight card title
+Dashboard,Stats Grid,Time in Range,French,Highlight card title
+Dashboard,Stats Grid,Total Insulin Today,German,Highlight card title
+Dashboard,Stats Grid,Pump Status,Spanish,Highlight card title
+Dashboard,Device Status,Battery,French,Highlight label
+Dashboard,Device Status,Reservoir,German,Highlight label
+Dashboard,Glucose Chart,24-Hour Glucose Trend,Spanish,Highlight chart title
+Dashboard,Glucose Chart,Your glucose levels over the past 24 hours,French,Highlight chart description
+Dashboard,Activity Feed,Recent Activity,German,Highlight section title
+Dashboard,Activity Feed,Bolus Delivery,Spanish,Highlight all instances
