@@ -240,16 +240,80 @@ async function runTestCase(browser, testCase, index) {
     }
     
     if (testCase.section === 'Glucose Chart' && testCase.string === 'value') {
-      // Hover over the chart area to show tooltip - use the recharts container
-      // The chart is inside a div with class containing 'recharts' or we can target the main content area
-      const chartArea = page.locator('.recharts-wrapper, .recharts-surface').first();
+      // Find the glucose chart (the AreaChart, not the PieChart)
+      // The glucose chart is in the card with "24-Hour Glucose Trend" or its French translation
+      const glucoseChartCard = page.locator('.recharts-wrapper').first();
+      
       try {
-        await chartArea.hover({ position: { x: 200, y: 100 }, timeout: 5000 });
+        // Get the bounding box of the chart
+        const box = await glucoseChartCard.boundingBox();
+        if (box) {
+          // Sweep across the chart to find a data point and trigger tooltip
+          let tooltipFound = false;
+          const yPos = box.y + box.height * 0.4; // 40% from top of chart
+          
+          for (let i = 0; i < 30 && !tooltipFound; i++) {
+            const xPos = box.x + (box.width * (i + 5) / 40); // Sweep from left to right
+            await page.mouse.move(xPos, yPos);
+            await page.waitForTimeout(100);
+            
+            // Check if tooltip appeared
+            const tooltipVisible = await page.locator('.recharts-tooltip-wrapper').isVisible().catch(() => false);
+            if (tooltipVisible) {
+              tooltipFound = true;
+              console.log(`  Tooltip found at position ${i}`);
+            }
+          }
+          
+          if (!tooltipFound) {
+            console.log('  Warning: Could not trigger tooltip by sweeping');
+          }
+        }
       } catch (e) {
-        // Fallback: hover over the main content area where the chart is
-        await page.mouse.move(450, 380);
+        console.log(`  Error triggering tooltip: ${e.message}`);
       }
-      await page.waitForTimeout(1000);
+      
+      await page.waitForTimeout(500);
+      
+      // Now highlight the tooltip content instead of searching for "value" globally
+      // The tooltip contains the glucose value, so highlight the entire tooltip
+      const tooltipHighlighted = await page.evaluate(() => {
+        document.querySelectorAll('.devin-highlight-overlay').forEach(el => el.remove());
+        
+        const tooltip = document.querySelector('.recharts-tooltip-wrapper');
+        if (tooltip) {
+          const rect = tooltip.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            const overlay = document.createElement('div');
+            overlay.className = 'devin-highlight-overlay';
+            overlay.style.cssText = `
+              position: fixed;
+              top: ${rect.top - 3}px;
+              left: ${rect.left - 3}px;
+              width: ${rect.width + 6}px;
+              height: ${rect.height + 6}px;
+              border: 3px solid red;
+              box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+              pointer-events: none;
+              z-index: 999999;
+              box-sizing: border-box;
+            `;
+            document.body.appendChild(overlay);
+            return true;
+          }
+        }
+        return false;
+      });
+      
+      if (tooltipHighlighted) {
+        console.log(`  Highlighted tooltip for "value"`);
+        // Take screenshot immediately while tooltip is visible
+        const screenshotPath = path.join(SCREENSHOT_DIR, testCase.filename);
+        await page.screenshot({ path: screenshotPath, fullPage: false });
+        console.log(`Screenshot saved: ${screenshotPath}`);
+        await context.close();
+        return; // Exit early since we handled this case specially
+      }
     }
     
     // Highlight the target element(s)
