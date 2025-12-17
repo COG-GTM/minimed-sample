@@ -70,7 +70,8 @@ async function switchLanguage(page, langCode) {
 }
 
 async function highlightElement(page, selector, highlightAll = false) {
-  const count = await page.evaluate(({ selector, highlightAll }) => {
+  // First, find and scroll to the element(s)
+  const scrollResult = await page.evaluate(({ selector, highlightAll }) => {
     // Remove any existing highlight overlays
     document.querySelectorAll('.devin-highlight-overlay').forEach(el => el.remove());
 
@@ -96,7 +97,7 @@ async function highlightElement(page, selector, highlightAll = false) {
         // Prefer elements that are visible and have a bounding box
         const rect = el.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
-          matchedElements.push({ el, rect, directMatch: directText.includes(selector) });
+          matchedElements.push({ el, directMatch: directText.includes(selector) });
         }
       }
     });
@@ -105,32 +106,84 @@ async function highlightElement(page, selector, highlightAll = false) {
     matchedElements.sort((a, b) => {
       if (a.directMatch && !b.directMatch) return -1;
       if (!a.directMatch && b.directMatch) return 1;
+      const rectA = a.el.getBoundingClientRect();
+      const rectB = b.el.getBoundingClientRect();
+      return (rectA.width * rectA.height) - (rectB.width * rectB.height);
+    });
+    
+    // Get elements to highlight
+    const elementsToHighlight = highlightAll ? matchedElements : matchedElements.slice(0, 1);
+    
+    // Scroll the first element into view
+    if (elementsToHighlight.length > 0) {
+      elementsToHighlight[0].el.scrollIntoView({ behavior: 'instant', block: 'center' });
+    }
+    
+    return elementsToHighlight.length;
+  }, { selector, highlightAll });
+  
+  // Wait for scroll to complete
+  await page.waitForTimeout(300);
+  
+  // Now create overlays after scroll (recalculate positions)
+  const count = await page.evaluate(({ selector, highlightAll }) => {
+    // Find elements again after scroll
+    const allElements = document.querySelectorAll('*');
+    const matchedElements = [];
+    
+    allElements.forEach(el => {
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE' || el.classList.contains('devin-highlight-overlay')) {
+        return;
+      }
+      
+      const directText = Array.from(el.childNodes)
+        .filter(node => node.nodeType === Node.TEXT_NODE)
+        .map(node => node.textContent.trim())
+        .join('');
+      
+      const fullText = el.textContent ? el.textContent.trim() : '';
+      
+      if (directText.includes(selector) || fullText === selector) {
+        const rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          matchedElements.push({ el, rect, directMatch: directText.includes(selector) });
+        }
+      }
+    });
+    
+    matchedElements.sort((a, b) => {
+      if (a.directMatch && !b.directMatch) return -1;
+      if (!a.directMatch && b.directMatch) return 1;
       return (a.rect.width * a.rect.height) - (b.rect.width * b.rect.height);
     });
     
-    // Create overlay boxes for matched elements
     const elementsToHighlight = highlightAll ? matchedElements : matchedElements.slice(0, 1);
     
-    elementsToHighlight.forEach((item, index) => {
+    // Create overlay boxes with fresh bounding box calculations
+    elementsToHighlight.forEach((item) => {
       const rect = item.el.getBoundingClientRect();
-      const overlay = document.createElement('div');
-      overlay.className = 'devin-highlight-overlay';
-      overlay.style.cssText = `
-        position: fixed;
-        top: ${rect.top - 3}px;
-        left: ${rect.left - 3}px;
-        width: ${rect.width + 6}px;
-        height: ${rect.height + 6}px;
-        border: 3px solid red;
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        pointer-events: none;
-        z-index: 999999;
-        box-sizing: border-box;
-      `;
-      document.body.appendChild(overlay);
+      
+      // Only create overlay if element is in viewport
+      if (rect.top >= -50 && rect.top < window.innerHeight + 50) {
+        const overlay = document.createElement('div');
+        overlay.className = 'devin-highlight-overlay';
+        overlay.style.cssText = `
+          position: fixed;
+          top: ${rect.top - 3}px;
+          left: ${rect.left - 3}px;
+          width: ${rect.width + 6}px;
+          height: ${rect.height + 6}px;
+          border: 3px solid red;
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+          pointer-events: none;
+          z-index: 999999;
+          box-sizing: border-box;
+        `;
+        document.body.appendChild(overlay);
+      }
     });
     
-    return elementsToHighlight.length;
+    return document.querySelectorAll('.devin-highlight-overlay').length;
   }, { selector, highlightAll });
   
   console.log(`  Highlighted ${count} element(s) for "${selector}"`);
