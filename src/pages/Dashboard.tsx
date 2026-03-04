@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import NotificationsPanel from '@/components/NotificationsPanel';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -59,6 +60,7 @@ const Dashboard = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
@@ -196,7 +198,7 @@ const Dashboard = () => {
     { icon: Droplet, label: translations.insulinManagement },
     { icon: Wifi, label: translations.deviceStatus },
     { icon: FileText, label: translations.reports },
-    { icon: Settings, label: translations.settings }
+    { icon: Settings, label: translations.settings, path: '/settings' }
   ];
 
   return (
@@ -219,7 +221,10 @@ const Dashboard = () => {
           <div className="flex items-center space-x-4">
             <LanguageDropdown />
             
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
+            <button
+              className="relative p-2 hover:bg-white/20 rounded-lg"
+              onClick={() => setNotificationsOpen(true)}
+            >
               <Bell className="h-5 w-5 text-white" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
             </button>
@@ -237,11 +242,11 @@ const Dashboard = () => {
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>{translations.myAccount}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
                   <User className="mr-2 h-4 w-4" />
                   {translations.profile}
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/settings')}>
                   <Settings className="mr-2 h-4 w-4" />
                   {translations.settings}
                 </DropdownMenuItem>
@@ -266,6 +271,7 @@ const Dashboard = () => {
               {sidebarItems.map((item, index) => (
                 <button
                   key={index}
+                  onClick={() => item.path && navigate(item.path)}
                   className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
                     item.active 
                       ? 'bg-gradient-to-r from-medtronic-lightCyan to-medtronic-skyBlue text-medtronic-deepPurple font-semibold' 
@@ -521,6 +527,12 @@ const Dashboard = () => {
           </Card>
         </main>
       </div>
+
+      {/* Notifications Panel */}
+      <NotificationsPanel
+        isOpen={notificationsOpen}
+        onClose={() => setNotificationsOpen(false)}
+      />
     </div>
   );
 };
