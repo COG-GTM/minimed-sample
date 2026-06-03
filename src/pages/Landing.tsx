@@ -42,20 +42,28 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Skip to main content */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-medtronic-deepPurple focus:rounded-md focus:shadow-lg focus:font-semibold focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white">
+      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white" role="banner" aria-label="Main site header">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
+            <a href="/" className="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded-md" aria-label="MiniMed home">
               <div className="text-3xl font-bold">
                 <span className="text-white">MiniMed</span>
                 <span className="text-xs align-super">™</span>
               </div>
-            </div>
+            </a>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
               <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.products')}
               </a>
@@ -82,10 +90,13 @@ const Landing = () => {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden p-2"
+                className="md:hidden p-2 focus:outline-none focus:ring-2 focus:ring-white rounded-md"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {mobileMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -93,7 +104,7 @@ const Landing = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t">
+          <nav id="mobile-menu" className="md:hidden bg-white border-t" aria-label="Mobile navigation" role="navigation">
             <div className="px-4 py-2 space-y-1">
               <a href="#" className="block py-2 text-gray-600">
                 {tSync('nav.products')}
@@ -115,11 +126,12 @@ const Landing = () => {
                 {tSync('nav.signin')}
               </Button>
             </div>
-          </div>
+          </nav>
         )}
       </header>
 
       {/* Hero Section */}
+      <main id="main-content">
       <section className="relative overflow-hidden bg-gradient-minimed">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -212,6 +224,7 @@ const Landing = () => {
           </Button>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-medtronic-deepPurple text-gray-300 py-12">

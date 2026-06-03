@@ -109,10 +109,10 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-gradient-minimed flex flex-col">
       {/* Header */}
-      <header className="p-4">
+      <header className="p-4" role="banner" aria-label="Authentication header">
         <div className="container mx-auto flex justify-between items-center">
-          <Link to="/" className="inline-flex items-center space-x-2 text-medtronic-deepPurple hover:text-medtronic-purple transition-colors font-medium">
-            <ArrowLeft className="h-4 w-4" />
+          <Link to="/" className="inline-flex items-center space-x-2 text-medtronic-deepPurple hover:text-medtronic-purple transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue focus:rounded-md" aria-label="Back to home page">
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span>{translations.backToHome}</span>
           </Link>
           <LanguageDropdown />

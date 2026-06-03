@@ -201,27 +201,38 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Skip to main content */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-medtronic-deepPurple focus:rounded-md focus:shadow-lg focus:font-semibold focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue"
+      >
+        Skip to main content
+      </a>
+
       {/* Top Navigation */}
-      <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
+      <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md" role="banner" aria-label="Dashboard header">
         <div className="flex items-center justify-between px-4 h-20">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
+              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white"
+              aria-expanded={sidebarOpen}
+              aria-controls="sidebar-nav"
+              aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
-            <div className="flex items-center space-x-2">
+            <a href="/" className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded-md" aria-label="MiniMed home">
               <span className="text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span> Dashboard</span>
-            </div>
+            </a>
           </div>
 
           <div className="flex items-center space-x-4">
             <LanguageDropdown />
             
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
-              <Bell className="h-5 w-5 text-white" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
+            <button className="relative p-2 hover:bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white" aria-label="Notifications - new alerts available">
+              <Bell className="h-5 w-5 text-white" aria-hidden="true" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full" aria-hidden="true"></span>
             </button>
 
             <DropdownMenu>
@@ -258,11 +269,15 @@ const Dashboard = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className={`${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r transition-transform duration-300 mt-20 lg:mt-0`}>
+        <aside
+          id="sidebar-nav"
+          className={`${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r transition-transform duration-300 mt-20 lg:mt-0`}
+          aria-label="Dashboard sidebar"
+        >
           <div className="p-4">
-            <nav className="space-y-1">
+            <nav className="space-y-1" aria-label="Dashboard navigation">
               {sidebarItems.map((item, index) => (
                 <button
                   key={index}
@@ -284,12 +299,14 @@ const Dashboard = () => {
         {sidebarOpen && (
           <div 
             className="lg:hidden fixed inset-0 bg-black/50 z-20"
+            role="presentation"
+            aria-hidden="true"
             onClick={() => setSidebarOpen(false)}
           />
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main id="main-content" className="flex-1 p-4 lg:p-6">
           {/* Welcome Message */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900">
