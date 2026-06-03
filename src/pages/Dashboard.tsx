@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
@@ -59,6 +59,20 @@ const Dashboard = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const closeSidebar = useCallback(() => {
+    setSidebarOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && sidebarOpen) {
+        closeSidebar();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [sidebarOpen, closeSidebar]);
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
@@ -201,81 +215,105 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Skip Navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-white focus:text-medtronic-deepPurple focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue"
+      >
+        Skip to main content
+      </a>
+
       {/* Top Navigation */}
-      <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
+      <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md" role="banner">
         <div className="flex items-center justify-between px-4 h-20">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
+              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white"
+              aria-expanded={sidebarOpen}
+              aria-controls="sidebar-nav"
+              aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span> Dashboard</span>
+              <span className="text-2xl font-bold text-white" aria-label="MiniMed Dashboard">
+                MiniMed<span className="text-xs align-super" aria-hidden="true">™</span> Dashboard
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <nav aria-label="Header actions" className="flex items-center space-x-4">
             <LanguageDropdown />
             
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
-              <Bell className="h-5 w-5 text-white" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
+            <button
+              className="relative p-2 hover:bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+              aria-label="Notifications (new notifications available)"
+            >
+              <Bell className="h-5 w-5 text-white" aria-hidden="true" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full" aria-hidden="true"></span>
             </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <Button variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20" aria-label={`Account menu for ${user?.name}`}>
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
                     <User className="h-4 w-4 text-medtronic-deepPurple" />
                   </div>
                   <span className="hidden md:inline">{user?.name}</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>{translations.myAccount}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
+                  <User className="mr-2 h-4 w-4" aria-hidden="true" />
                   {translations.profile}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
+                  <Settings className="mr-2 h-4 w-4" aria-hidden="true" />
                   {translations.settings}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
                   {translations.signOut}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+          </nav>
         </div>
       </header>
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className={`${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r transition-transform duration-300 mt-20 lg:mt-0`}>
+        <aside
+          id="sidebar-nav"
+          className={`${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r transition-transform duration-300 mt-20 lg:mt-0`}
+          aria-label="Sidebar navigation"
+        >
           <div className="p-4">
-            <nav className="space-y-1">
-              {sidebarItems.map((item, index) => (
-                <button
-                  key={index}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                    item.active 
-                      ? 'bg-gradient-to-r from-medtronic-lightCyan to-medtronic-skyBlue text-medtronic-deepPurple font-semibold' 
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              ))}
+            <nav aria-label="Dashboard sections">
+              <ul className="space-y-1" role="list">
+                {sidebarItems.map((item, index) => (
+                  <li key={index}>
+                    <button
+                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue ${
+                        item.active 
+                          ? 'bg-gradient-to-r from-medtronic-lightCyan to-medtronic-skyBlue text-medtronic-deepPurple font-semibold' 
+                          : 'text-gray-600 hover:bg-gray-100'
+                      }`}
+                      aria-current={item.active ? 'page' : undefined}
+                    >
+                      <item.icon className="h-5 w-5" aria-hidden="true" />
+                      <span className="font-medium">{item.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </nav>
           </div>
         </aside>
@@ -285,11 +323,13 @@ const Dashboard = () => {
           <div 
             className="lg:hidden fixed inset-0 bg-black/50 z-20"
             onClick={() => setSidebarOpen(false)}
+            role="presentation"
+            aria-hidden="true"
           />
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main id="main-content" className="flex-1 p-4 lg:p-6">
           {/* Welcome Message */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900">
