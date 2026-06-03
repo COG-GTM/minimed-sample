@@ -108,19 +108,31 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-minimed flex flex-col">
+      {/* Skip Navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-white focus:text-medtronic-deepPurple focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
-      <header className="p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link to="/" className="inline-flex items-center space-x-2 text-medtronic-deepPurple hover:text-medtronic-purple transition-colors font-medium">
-            <ArrowLeft className="h-4 w-4" />
+      <header className="p-4" role="banner">
+        <nav className="container mx-auto flex justify-between items-center" aria-label="Page navigation">
+          <Link
+            to="/"
+            className="inline-flex items-center space-x-2 text-medtronic-deepPurple hover:text-medtronic-purple transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue focus:rounded"
+            aria-label="Back to home page"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span>{translations.backToHome}</span>
           </Link>
           <LanguageDropdown />
-        </div>
+        </nav>
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center p-4">
+      <main id="main-content" className="flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md shadow-2xl bg-white/95 backdrop-blur-sm border-0">
           <CardHeader className="space-y-1">
             <div className="flex items-center justify-center mb-4">
@@ -250,7 +262,7 @@ const Auth = () => {
             </div>
           </CardFooter>
         </Card>
-      </div>
+      </main>
 
       {/* Demo Credentials Info */}
       <div className="p-4">

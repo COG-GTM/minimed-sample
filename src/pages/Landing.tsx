@@ -10,12 +10,26 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const Landing = () => {
   const navigate = useNavigate();
   const { tSync } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen, closeMobileMenu]);
 
   const features = [
     {
@@ -42,8 +56,16 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Skip Navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-white focus:text-medtronic-deepPurple focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white">
+      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white" role="banner">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -55,7 +77,7 @@ const Landing = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
               <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.products')}
               </a>
@@ -82,10 +104,13 @@ const Landing = () => {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden p-2"
+                className="md:hidden p-2 rounded-lg hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {mobileMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -93,15 +118,19 @@ const Landing = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t">
+          <nav
+            id="mobile-menu"
+            className="md:hidden bg-white border-t"
+            aria-label="Mobile navigation"
+          >
             <div className="px-4 py-2 space-y-1">
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#" className="block py-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue focus:rounded">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#" className="block py-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue focus:rounded">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#" className="block py-2 text-gray-600 focus:outline-none focus:ring-2 focus:ring-medtronic-brightBlue focus:rounded">
                 {tSync('nav.healthcare')}
               </a>
               <div className="py-2">
@@ -115,11 +144,12 @@ const Landing = () => {
                 {tSync('nav.signin')}
               </Button>
             </div>
-          </div>
+          </nav>
         )}
       </header>
 
       {/* Hero Section */}
+      <main id="main-content">
       <section className="relative overflow-hidden bg-gradient-minimed">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -212,6 +242,8 @@ const Landing = () => {
           </Button>
         </div>
       </section>
+
+      </main>
 
       {/* Footer */}
       <footer className="bg-medtronic-deepPurple text-gray-300 py-12">
