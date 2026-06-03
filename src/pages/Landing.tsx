@@ -130,7 +130,7 @@ const Landing = () => {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-medtronic-deepPurple leading-tight">
                 {tSync('hero.title')}
               </h1>
-              <p className="text-xl text-medtronic-purple">
+              <p className="text-xl text-medtronic-purple leading-relaxed">
                 {tSync('hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
