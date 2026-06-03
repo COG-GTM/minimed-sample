@@ -214,42 +214,42 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-medtronic-deepPurple text-gray-300 py-12">
+      <footer className="bg-medtronic-deepPurple text-gray-300 py-12" role="contentinfo" aria-label="Site footer">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <nav aria-label="Footer navigation" className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="text-white font-semibold mb-4">Products</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">MiniMed 780G</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Guardian Sensors</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">CareLink Software</a></li>
+              <h4 id="footer-products" className="text-white font-semibold mb-4">Products</h4>
+              <ul className="space-y-2" aria-labelledby="footer-products">
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">MiniMed 780G</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Guardian Sensors</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">CareLink Software</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Support</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">Customer Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Training</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Resources</a></li>
+              <h4 id="footer-support" className="text-white font-semibold mb-4">Support</h4>
+              <ul className="space-y-2" aria-labelledby="footer-support">
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Customer Service</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Training</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Resources</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Company</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 id="footer-company" className="text-white font-semibold mb-4">Company</h4>
+              <ul className="space-y-2" aria-labelledby="footer-company">
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">About Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Careers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Contact</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Use</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Regulatory</a></li>
+              <h4 id="footer-legal" className="text-white font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2" aria-labelledby="footer-legal">
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Terms of Use</a></li>
+                <li><a href="#" className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:rounded-sm">Regulatory</a></li>
               </ul>
             </div>
-          </div>
+          </nav>
           <div className="border-t border-gray-800 pt-8 text-center">
             <p className="text-sm">
               © 2024 MiniMed Dashboard. This is a demonstration platform inspired by Medtronic systems.

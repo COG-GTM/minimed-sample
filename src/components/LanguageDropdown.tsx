@@ -29,8 +29,8 @@ const LanguageDropdown = ({ variant = 'desktop', className = '' }: LanguageDropd
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className={`w-full justify-start ${className}`}>
-            <Globe className="h-4 w-4 mr-2" />
+          <Button variant="ghost" size="sm" className={`w-full justify-start ${className}`} aria-label={`Change language, current: ${currentLanguage?.label}`}>
+            <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
             <span>{currentLanguage?.flag} {currentLanguage?.label}</span>
           </Button>
         </DropdownMenuTrigger>
@@ -40,8 +40,9 @@ const LanguageDropdown = ({ variant = 'desktop', className = '' }: LanguageDropd
               key={lang.code}
               onClick={() => setLanguage(lang.code)}
               className="flex items-center space-x-2"
+              aria-current={lang.code === language ? 'true' : undefined}
             >
-              <span>{lang.flag}</span>
+              <span aria-hidden="true">{lang.flag}</span>
               <span>{lang.label}</span>
             </DropdownMenuItem>
           ))}
@@ -53,10 +54,10 @@ const LanguageDropdown = ({ variant = 'desktop', className = '' }: LanguageDropd
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className={`flex items-center space-x-2 ${className}`}>
-          <Globe className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className={`flex items-center space-x-2 ${className}`} aria-label={`Change language, current: ${currentLanguage?.label}`}>
+          <Globe className="h-4 w-4" aria-hidden="true" />
           <span>{currentLanguage?.flag} {currentLanguage?.label}</span>
-          <ChevronDown className="h-3 w-3" />
+          <ChevronDown className="h-3 w-3" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -65,8 +66,9 @@ const LanguageDropdown = ({ variant = 'desktop', className = '' }: LanguageDropd
             key={lang.code}
             onClick={() => setLanguage(lang.code)}
             className="flex items-center space-x-2"
+            aria-current={lang.code === language ? 'true' : undefined}
           >
-            <span>{lang.flag}</span>
+            <span aria-hidden="true">{lang.flag}</span>
             <span>{lang.label}</span>
           </DropdownMenuItem>
         ))}
