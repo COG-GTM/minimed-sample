@@ -35,6 +35,12 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           CHANGED_FILES: ${{ steps.changed-files.outputs.result }}
         run: |
+          if [ -z "$DEVIN_WEBHOOK_URL" ] || [ -z "$DEVIN_WEBHOOK_SECRET" ]; then
+            echo "::warning::DEVIN_WEBHOOK_URL or DEVIN_WEBHOOK_SECRET not set. Skipping webhook trigger."
+            echo "Configure these secrets in Settings → Secrets and variables → Actions."
+            exit 0
+          fi
+
           jq -n \
             --arg pr_url "$PR_URL" \
             --argjson pr_number "$PR_NUMBER" \
