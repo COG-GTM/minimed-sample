@@ -105,4 +105,20 @@ test.describe('Dashboard navigation — mobile sidebar overlay', () => {
     await expect(page).toHaveURL('/dashboard/reports');
     await expect(sidebar).not.toBeInViewport();
   });
+
+  test('tapping the dimmed overlay closes the sidebar without navigating', async ({ page }) => {
+    const sidebar = page.locator('aside');
+
+    const menuButton = page
+      .locator('header button')
+      .filter({ has: page.locator('svg.lucide-menu') });
+    await menuButton.click();
+    await expect(sidebar).toBeInViewport();
+
+    // Tap the backdrop to the right of the 256px-wide sidebar: it dismisses the
+    // sidebar and the URL stays on the Overview index route.
+    await page.mouse.click(350, 400);
+    await expect(sidebar).not.toBeInViewport();
+    await expect(page).toHaveURL('/dashboard');
+  });
 });
