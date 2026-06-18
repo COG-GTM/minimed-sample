@@ -44,7 +44,13 @@ class TranslationService {
       'Below Range': 'Debajo del Rango',
       'In Range': 'En Rango',
       'Above Range': 'Arriba del Rango',
-      'Basal Delivery': 'Entrega Basal'
+      'Basal Delivery': 'Entrega Basal',
+      'This section is coming soon.': 'Esta sección estará disponible pronto.',
+      'Track your continuous glucose readings, trends, and time in range.': 'Controla tus lecturas continuas de glucosa, las tendencias y el tiempo en rango.',
+      'Review your basal and bolus insulin deliveries and dosing history.': 'Revisa tus entregas de insulina basal y bolo y el historial de dosis.',
+      'Monitor your pump connectivity, battery level, and reservoir status.': 'Supervisa la conectividad de tu bomba, el nivel de batería y el estado del reservorio.',
+      'Generate and download summary reports to share with your care team.': 'Genera y descarga informes resumidos para compartir con tu equipo de atención.',
+      'Manage your account preferences, notifications, and device configuration.': 'Administra las preferencias de tu cuenta, las notificaciones y la configuración del dispositivo.'
     },
     fr: {
       'Welcome to MiniMed': 'Bienvenue à MiniMed',
@@ -88,7 +94,13 @@ class TranslationService {
       'Below Range': 'En Dessous de la Plage',
       'In Range': 'Dans la Plage',
       'Above Range': 'Au-Dessus de la Plage',
-      'Basal Delivery': 'Livraison Basale'
+      'Basal Delivery': 'Livraison Basale',
+      'This section is coming soon.': 'Cette section sera bientôt disponible.',
+      'Track your continuous glucose readings, trends, and time in range.': 'Suivez vos lectures de glucose en continu, les tendances et le temps dans la plage.',
+      'Review your basal and bolus insulin deliveries and dosing history.': "Consultez vos administrations d'insuline basale et bolus ainsi que l'historique des doses.",
+      'Monitor your pump connectivity, battery level, and reservoir status.': "Surveillez la connectivité de votre pompe, le niveau de batterie et l'état du réservoir.",
+      'Generate and download summary reports to share with your care team.': 'Générez et téléchargez des rapports récapitulatifs à partager avec votre équipe soignante.',
+      'Manage your account preferences, notifications, and device configuration.': "Gérez les préférences de votre compte, les notifications et la configuration de l'appareil."
     },
     de: {
       'Welcome to MiniMed': 'Willkommen bei MiniMed',
@@ -132,7 +144,13 @@ class TranslationService {
       'Below Range': 'Unter dem Bereich',
       'In Range': 'Im Bereich',
       'Above Range': 'Über dem Bereich',
-      'Basal Delivery': 'Basale Abgabe'
+      'Basal Delivery': 'Basale Abgabe',
+      'This section is coming soon.': 'Dieser Bereich ist bald verfügbar.',
+      'Track your continuous glucose readings, trends, and time in range.': 'Verfolgen Sie Ihre kontinuierlichen Glukosemessungen, Trends und die Zeit im Bereich.',
+      'Review your basal and bolus insulin deliveries and dosing history.': 'Überprüfen Sie Ihre basalen und Bolus-Insulinabgaben sowie den Dosierungsverlauf.',
+      'Monitor your pump connectivity, battery level, and reservoir status.': 'Überwachen Sie die Konnektivität Ihrer Pumpe, den Batteriestand und den Reservoirstatus.',
+      'Generate and download summary reports to share with your care team.': 'Erstellen und laden Sie zusammenfassende Berichte herunter, um sie mit Ihrem Behandlungsteam zu teilen.',
+      'Manage your account preferences, notifications, and device configuration.': 'Verwalten Sie Ihre Kontoeinstellungen, Benachrichtigungen und die Gerätekonfiguration.'
     }
   };
   
