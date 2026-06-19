@@ -4,6 +4,8 @@ import { LanguageProvider } from '@/contexts/LanguageContext';
 import Landing from '@/pages/Landing';
 import Auth from '@/pages/Auth';
 import Dashboard from '@/pages/Dashboard';
+import Settings from '@/pages/Settings';
+import Profile from '@/pages/Profile';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 function App() {
@@ -19,6 +21,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />
