@@ -1,0 +1,11 @@
+Screen/Page,Section,String,Language,Misc
+Landing,Header Navigation,Products,Spanish,Highlight nav link
+Landing,Header Navigation,Support,Spanish,Highlight nav link
+Landing,Header Navigation,Healthcare Professionals,Spanish,Highlight nav link
+Landing,Header Navigation,Sign In,French,Highlight button only
+Landing,Hero Section,Take Control of Your Diabetes,German,Highlight full text
+Landing,Hero Section,Get Started,Spanish,Highlight button only
+Landing,Hero Section,Learn More,French,Highlight button only
+Landing,Features Section,Real-Time Monitoring,German,Highlight feature title
+Landing,Features Section,Smart Insulin Delivery,Spanish,Highlight feature title
+Landing,CTA Section,Start Your Journey,French,Highlight button only

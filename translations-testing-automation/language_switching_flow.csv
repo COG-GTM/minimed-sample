@@ -1,0 +1,11 @@
+Screen/Page,Section,String,Language,Misc
+Landing,Language Dropdown,English,English,Highlight current selection
+Landing,Language Dropdown,Español,Spanish,Highlight dropdown option
+Landing,Hero Section,Take Control of Your Diabetes,Spanish,Verify translation after switch
+Auth,Language Dropdown,Français,French,Highlight dropdown option
+Auth,Login Card,Welcome to MiniMed,French,Verify translation after switch
+Auth,Login Form,Sign In,French,Verify button translation
+Dashboard,Language Dropdown,Deutsch,German,Highlight dropdown option
+Dashboard,Welcome Message,Welcome back,German,Verify translation after switch
+Dashboard,Stats Card,Current Glucose,German,Verify card title translation
+Dashboard,Stats Card,Time in Range,German,Verify card title translation
