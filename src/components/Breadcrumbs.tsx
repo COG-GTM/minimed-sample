@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const pathLabels: Record<string, string> = {
+const defaultLabels: Record<string, string> = {
   dashboard: 'Dashboard',
   glucose: 'Glucose Monitoring',
   insulin: 'Insulin Management',
@@ -13,6 +15,25 @@ const pathLabels: Record<string, string> = {
 
 const Breadcrumbs = () => {
   const location = useLocation();
+  const { t } = useLanguage();
+  const [labels, setLabels] = useState<Record<string, string>>(defaultLabels);
+
+  useEffect(() => {
+    const loadLabels = async () => {
+      const translated: Record<string, string> = {
+        dashboard: await t('Dashboard'),
+        glucose: await t('Glucose Monitoring'),
+        insulin: await t('Insulin Management'),
+        device: await t('Device Status'),
+        reports: await t('Reports'),
+        settings: await t('Settings'),
+        profile: await t('Profile'),
+      };
+      setLabels(translated);
+    };
+    loadLabels();
+  }, [t]);
+
   const segments = location.pathname.split('/').filter(Boolean);
 
   if (segments.length <= 1) return null;
@@ -21,7 +42,7 @@ const Breadcrumbs = () => {
     <nav className="flex items-center space-x-1 text-sm mb-4" aria-label="Breadcrumb">
       {segments.map((segment, index) => {
         const path = '/' + segments.slice(0, index + 1).join('/');
-        const label = pathLabels[segment] || segment;
+        const label = labels[segment] || segment;
         const isLast = index === segments.length - 1;
 
         return (

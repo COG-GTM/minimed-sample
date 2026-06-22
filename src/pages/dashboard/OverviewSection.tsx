@@ -39,8 +39,6 @@ const OverviewSection = () => {
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
   const [translations, setTranslations] = useState({
-    welcomeBack: 'Welcome back',
-    diabetesOverview: "Here's your diabetes management overview for today",
     currentGlucose: 'Current Glucose',
     timeInRange: 'Time in Range',
     totalInsulinToday: 'Total Insulin Today',
@@ -66,8 +64,6 @@ const OverviewSection = () => {
   useEffect(() => {
     const loadTranslations = async () => {
       const newTranslations = {
-        welcomeBack: await t('Welcome back'),
-        diabetesOverview: await t("Here's your diabetes management overview for today"),
         currentGlucose: await t('Current Glucose'),
         timeInRange: await t('Time in Range'),
         totalInsulinToday: await t('Total Insulin Today'),
