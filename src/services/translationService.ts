@@ -44,7 +44,21 @@ class TranslationService {
       'Below Range': 'Debajo del Rango',
       'In Range': 'En Rango',
       'Above Range': 'Arriba del Rango',
-      'Basal Delivery': 'Entrega Basal'
+      'Basal Delivery': 'Entrega Basal',
+      'Profile': 'Perfil',
+      'My Account': 'Mi Cuenta',
+      'Sign out': 'Cerrar Sesión',
+      'Bolus': 'Bolo',
+      'Basal': 'Basal',
+      'Delivery': 'Entrega',
+      'carbs': 'carbohidratos',
+      'Coming Soon': 'Próximamente',
+      'Track your glucose levels in real-time with advanced CGM integration.': 'Rastrea tus niveles de glucosa en tiempo real con integración avanzada de MCG.',
+      'Manage your insulin delivery with smart automated systems.': 'Gestiona tu entrega de insulina con sistemas automatizados inteligentes.',
+      'Monitor your pump and sensor device status and connectivity.': 'Monitorea el estado y la conectividad de tu bomba y sensor.',
+      'View detailed reports and analytics of your diabetes management data.': 'Ve reportes detallados y análisis de tus datos de gestión de diabetes.',
+      'Configure your dashboard preferences, notifications, and device settings.': 'Configura tus preferencias del panel, notificaciones y ajustes del dispositivo.',
+      'Manage your personal information and account settings.': 'Gestiona tu información personal y configuración de cuenta.'
     },
     fr: {
       'Welcome to MiniMed': 'Bienvenue à MiniMed',
@@ -88,7 +102,21 @@ class TranslationService {
       'Below Range': 'En Dessous de la Plage',
       'In Range': 'Dans la Plage',
       'Above Range': 'Au-Dessus de la Plage',
-      'Basal Delivery': 'Livraison Basale'
+      'Basal Delivery': 'Livraison Basale',
+      'Profile': 'Profil',
+      'My Account': 'Mon Compte',
+      'Sign out': 'Déconnexion',
+      'Bolus': 'Bolus',
+      'Basal': 'Basal',
+      'Delivery': 'Livraison',
+      'carbs': 'glucides',
+      'Coming Soon': 'Bientôt Disponible',
+      'Track your glucose levels in real-time with advanced CGM integration.': 'Suivez vos niveaux de glucose en temps réel avec une intégration avancée du MCG.',
+      'Manage your insulin delivery with smart automated systems.': 'Gérez votre administration d\'insuline avec des systèmes automatisés intelligents.',
+      'Monitor your pump and sensor device status and connectivity.': 'Surveillez l\'état et la connectivité de votre pompe et capteur.',
+      'View detailed reports and analytics of your diabetes management data.': 'Consultez des rapports détaillés et des analyses de vos données de gestion du diabète.',
+      'Configure your dashboard preferences, notifications, and device settings.': 'Configurez vos préférences de tableau de bord, notifications et paramètres d\'appareil.',
+      'Manage your personal information and account settings.': 'Gérez vos informations personnelles et paramètres de compte.'
     },
     de: {
       'Welcome to MiniMed': 'Willkommen bei MiniMed',
@@ -132,7 +160,21 @@ class TranslationService {
       'Below Range': 'Unter dem Bereich',
       'In Range': 'Im Bereich',
       'Above Range': 'Über dem Bereich',
-      'Basal Delivery': 'Basale Abgabe'
+      'Basal Delivery': 'Basale Abgabe',
+      'Profile': 'Profil',
+      'My Account': 'Mein Konto',
+      'Sign out': 'Abmelden',
+      'Bolus': 'Bolus',
+      'Basal': 'Basal',
+      'Delivery': 'Abgabe',
+      'carbs': 'Kohlenhydrate',
+      'Coming Soon': 'Demnächst Verfügbar',
+      'Track your glucose levels in real-time with advanced CGM integration.': 'Verfolgen Sie Ihre Glukosewerte in Echtzeit mit fortschrittlicher CGM-Integration.',
+      'Manage your insulin delivery with smart automated systems.': 'Verwalten Sie Ihre Insulinabgabe mit intelligenten automatisierten Systemen.',
+      'Monitor your pump and sensor device status and connectivity.': 'Überwachen Sie den Status und die Konnektivität Ihrer Pumpe und Ihres Sensors.',
+      'View detailed reports and analytics of your diabetes management data.': 'Sehen Sie detaillierte Berichte und Analysen Ihrer Diabetes-Management-Daten.',
+      'Configure your dashboard preferences, notifications, and device settings.': 'Konfigurieren Sie Ihre Dashboard-Einstellungen, Benachrichtigungen und Geräteeinstellungen.',
+      'Manage your personal information and account settings.': 'Verwalten Sie Ihre persönlichen Informationen und Kontoeinstellungen.'
     }
   };
   
