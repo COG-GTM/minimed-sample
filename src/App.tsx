@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Landing from '@/pages/Landing';
 import Auth from '@/pages/Auth';
 import Dashboard from '@/pages/Dashboard';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import NotFound from '@/pages/NotFound';
 import OverviewSection from '@/pages/dashboard/OverviewSection';
 import GlucoseMonitoringSection from '@/pages/dashboard/GlucoseMonitoringSection';
 import InsulinManagementSection from '@/pages/dashboard/InsulinManagementSection';
@@ -37,7 +38,7 @@ function App() {
               <Route path="settings" element={<SettingsSection />} />
               <Route path="profile" element={<ProfileSection />} />
             </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
       </LanguageProvider>

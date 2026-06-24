@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import {
   Activity,
   Bell,
@@ -175,6 +176,7 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <main className="flex-1 p-4 lg:p-6">
+          <Breadcrumbs />
           <Outlet />
         </main>
       </div>
