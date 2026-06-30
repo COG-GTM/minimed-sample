@@ -37,6 +37,7 @@ function App() {
               <Route path="reports" element={<ReportsSection />} />
               <Route path="settings" element={<SettingsSection />} />
               <Route path="profile" element={<ProfileSection />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

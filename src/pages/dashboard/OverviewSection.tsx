@@ -28,6 +28,7 @@ const OverviewSection = () => {
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
+  const [recentDeliveries, setRecentDeliveries] = useState<ReturnType<typeof generateInsulinDeliveries>>([]);
   const [translations, setTranslations] = useState({
     welcomeBack: 'Welcome back',
     diabetesOverview: "Here's your diabetes management overview for today",
@@ -84,15 +85,15 @@ const OverviewSection = () => {
   }, [t]);
 
   useEffect(() => {
-    setGlucoseReadings(generateGlucoseReadings(24));
-    setDeviceStatus(generateDeviceStatus());
-    setDailySummary(generateDailySummary());
-
-    const interval = setInterval(() => {
+    const refreshData = () => {
       setGlucoseReadings(generateGlucoseReadings(24));
       setDeviceStatus(generateDeviceStatus());
       setDailySummary(generateDailySummary());
-    }, 30000);
+      setRecentDeliveries(generateInsulinDeliveries(1).slice(0, 5));
+    };
+    refreshData();
+
+    const interval = setInterval(refreshData, 30000);
 
     return () => clearInterval(interval);
   }, []);
@@ -278,7 +279,7 @@ const OverviewSection = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {generateInsulinDeliveries(1).slice(0, 5).map((delivery, index) => (
+            {recentDeliveries.map((delivery, index) => (
               <div key={index} className="flex items-center justify-between py-2 border-b last:border-0">
                 <div className="flex items-center space-x-3">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${delivery.type === 'bolus' ? 'bg-blue-100' : 'bg-green-100'}`}>
