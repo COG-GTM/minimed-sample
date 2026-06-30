@@ -69,4 +69,15 @@ test.describe('Landing page navigation and footer links', () => {
     await mobileMenu.getByRole('link', { name: 'Healthcare Professionals' }).click();
     await expect(page).toHaveURL(/\/auth$/);
   });
+
+  test('mobile menu closes after clicking an anchor link', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.getByRole('button').filter({ has: page.locator('svg') }).last().click();
+    const mobileMenu = page.locator('.md\\:hidden').filter({ hasText: 'Products' });
+    await expect(mobileMenu).toBeVisible();
+    await mobileMenu.getByRole('link', { name: 'Products' }).click();
+    await expect(page).toHaveURL(/#features$/);
+    await expect(mobileMenu).toHaveCount(0);
+  });
 });
