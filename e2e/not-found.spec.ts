@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { loginAsPatient } from './helpers';
 
 test.describe('404 Not Found page', () => {
   test('renders the branded 404 page for an unknown URL', async ({ page }) => {
@@ -19,5 +20,13 @@ test.describe('404 Not Found page', () => {
     await page.goto('/nope');
     await page.getByRole('button', { name: 'Go to Dashboard' }).click();
     await expect(page).toHaveURL(/\/auth$/);
+  });
+
+  test('"Go to Dashboard" takes authenticated users to the dashboard', async ({ page }) => {
+    await loginAsPatient(page);
+    await page.goto('/nope');
+    await page.getByRole('button', { name: 'Go to Dashboard' }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByRole('heading', { name: /Welcome back/ })).toBeVisible();
   });
 });

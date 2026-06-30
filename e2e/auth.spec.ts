@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginAsPatient } from './helpers';
+import { loginAsPatient, loginAsDoctor } from './helpers';
 
 test.describe('Authentication & protected routes', () => {
   test('redirects unauthenticated users from /dashboard to /auth', async ({ page }) => {
@@ -19,5 +19,11 @@ test.describe('Authentication & protected routes', () => {
     await page.getByRole('button', { name: 'Demo Patient Account' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
     await expect(page.getByRole('heading', { name: /Welcome back/ })).toBeVisible();
+  });
+
+  test('logs in with demo doctor credentials and lands on the dashboard', async ({ page }) => {
+    await loginAsDoctor(page);
+    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByRole('heading', { name: /Welcome back, Dr\. Michael Chen/ })).toBeVisible();
   });
 });
