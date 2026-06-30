@@ -99,10 +99,10 @@ const Landing = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-2 space-y-1">
-              <a href="#features" className="block py-2 text-gray-600">
+              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.products')}
               </a>
-              <a href="#support" className="block py-2 text-gray-600">
+              <a href="#support" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.support')}
               </a>
               <a
@@ -229,7 +229,7 @@ const Landing = () => {
               <h4 className="text-white font-semibold mb-4">Products</h4>
               <ul className="space-y-2">
                 <li><a href="#features" className="hover:text-white transition-colors">MiniMed 780G</a></li>
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Guardian Sensors</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Guardian Sensors</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth'); }} className="hover:text-white transition-colors">CareLink Software</a></li>
               </ul>
             </div>
@@ -244,17 +244,17 @@ const Landing = () => {
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Legal</h4>
               <ul className="space-y-2">
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Terms of Use</a></li>
-                <li><a href="#" aria-disabled="true" title="Coming soon" className="hover:text-white transition-colors">Regulatory</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Terms of Use</a></li>
+                <li><a href="#" aria-disabled="true" title="Coming soon" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">Regulatory</a></li>
               </ul>
             </div>
           </div>
