@@ -44,7 +44,20 @@ class TranslationService {
       'Below Range': 'Debajo del Rango',
       'In Range': 'En Rango',
       'Above Range': 'Arriba del Rango',
-      'Basal Delivery': 'Entrega Basal'
+      'Basal Delivery': 'Entrega Basal',
+      'Profile': 'Perfil',
+      'Dashboard': 'Panel',
+      'Coming soon': 'Próximamente',
+      'View and analyze your continuous glucose monitoring data': 'Visualiza y analiza los datos de tu monitoreo continuo de glucosa',
+      'Manage your insulin delivery settings and history': 'Administra la configuración y el historial de administración de insulina',
+      'Check the status and health of your connected devices': 'Verifica el estado y la salud de tus dispositivos conectados',
+      'Generate and download detailed diabetes management reports': 'Genera y descarga informes detallados de gestión de la diabetes',
+      'Configure your account preferences and app settings': 'Configura las preferencias de tu cuenta y los ajustes de la aplicación',
+      'View and edit your personal profile information': 'Visualiza y edita la información de tu perfil personal',
+      'Page Not Found': 'Página No Encontrada',
+      "The page you're looking for doesn't exist or has been moved.": 'La página que buscas no existe o ha sido movida.',
+      'Go Home': 'Ir al Inicio',
+      'Go to Dashboard': 'Ir al Panel'
     },
     fr: {
       'Welcome to MiniMed': 'Bienvenue à MiniMed',
@@ -88,7 +101,20 @@ class TranslationService {
       'Below Range': 'En Dessous de la Plage',
       'In Range': 'Dans la Plage',
       'Above Range': 'Au-Dessus de la Plage',
-      'Basal Delivery': 'Livraison Basale'
+      'Basal Delivery': 'Livraison Basale',
+      'Profile': 'Profil',
+      'Dashboard': 'Tableau de Bord',
+      'Coming soon': 'Bientôt disponible',
+      'View and analyze your continuous glucose monitoring data': 'Visualisez et analysez vos données de surveillance continue du glucose',
+      'Manage your insulin delivery settings and history': "Gérez vos paramètres et votre historique d'administration d'insuline",
+      'Check the status and health of your connected devices': "Vérifiez l'état et la santé de vos appareils connectés",
+      'Generate and download detailed diabetes management reports': 'Générez et téléchargez des rapports détaillés de gestion du diabète',
+      'Configure your account preferences and app settings': "Configurez les préférences de votre compte et les paramètres de l'application",
+      'View and edit your personal profile information': 'Consultez et modifiez les informations de votre profil personnel',
+      'Page Not Found': 'Page Introuvable',
+      "The page you're looking for doesn't exist or has been moved.": "La page que vous recherchez n'existe pas ou a été déplacée.",
+      'Go Home': 'Accueil',
+      'Go to Dashboard': 'Aller au Tableau de Bord'
     },
     de: {
       'Welcome to MiniMed': 'Willkommen bei MiniMed',
@@ -132,7 +158,20 @@ class TranslationService {
       'Below Range': 'Unter dem Bereich',
       'In Range': 'Im Bereich',
       'Above Range': 'Über dem Bereich',
-      'Basal Delivery': 'Basale Abgabe'
+      'Basal Delivery': 'Basale Abgabe',
+      'Profile': 'Profil',
+      'Dashboard': 'Dashboard',
+      'Coming soon': 'Demnächst verfügbar',
+      'View and analyze your continuous glucose monitoring data': 'Sehen und analysieren Sie Ihre kontinuierlichen Glukoseüberwachungsdaten',
+      'Manage your insulin delivery settings and history': 'Verwalten Sie Ihre Insulinabgabeeinstellungen und den Verlauf',
+      'Check the status and health of your connected devices': 'Überprüfen Sie den Status und Zustand Ihrer verbundenen Geräte',
+      'Generate and download detailed diabetes management reports': 'Erstellen und laden Sie detaillierte Diabetes-Management-Berichte herunter',
+      'Configure your account preferences and app settings': 'Konfigurieren Sie Ihre Kontoeinstellungen und App-Einstellungen',
+      'View and edit your personal profile information': 'Sehen und bearbeiten Sie Ihre persönlichen Profilinformationen',
+      'Page Not Found': 'Seite Nicht Gefunden',
+      "The page you're looking for doesn't exist or has been moved.": 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
+      'Go Home': 'Zur Startseite',
+      'Go to Dashboard': 'Zum Dashboard'
     }
   };
   
