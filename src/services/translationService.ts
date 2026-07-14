@@ -45,6 +45,19 @@ class TranslationService {
       'In Range': 'En Rango',
       'Above Range': 'Arriba del Rango',
       'Basal Delivery': 'Entrega Basal'
+      ,'Profile': 'Perfil'
+      ,'Dashboard': 'Panel'
+      ,'Coming soon': 'Próximamente'
+      ,'View detailed glucose trends, CGM data, and historical readings.': 'Consulta las tendencias detalladas de glucosa, los datos del MCG y las lecturas históricas.'
+      ,'Review basal rates, bolus history, and insulin delivery settings.': 'Revisa las tasas basales, el historial de bolos y la configuración de administración de insulina.'
+      ,'Check pump connectivity, battery, reservoir, and sensor status.': 'Comprueba la conectividad de la bomba, la batería, el reservorio y el estado del sensor.'
+      ,'Generate and export clinical reports for you and your care team.': 'Genera y exporta informes clínicos para ti y tu equipo de atención.'
+      ,'Manage your preferences, alerts, and account settings.': 'Administra tus preferencias, alertas y configuración de la cuenta.'
+      ,'View and edit your personal and medical profile information.': 'Consulta y edita tu información personal y médica.'
+      ,'Page not found': 'Página no encontrada'
+      ,"The page you're looking for doesn't exist or may have moved.": 'La página que buscas no existe o puede haberse movido.'
+      ,'Go Home': 'Ir al inicio'
+      ,'Go to Dashboard': 'Ir al panel'
     },
     fr: {
       'Welcome to MiniMed': 'Bienvenue à MiniMed',
@@ -89,6 +102,19 @@ class TranslationService {
       'In Range': 'Dans la Plage',
       'Above Range': 'Au-Dessus de la Plage',
       'Basal Delivery': 'Livraison Basale'
+      ,'Profile': 'Profil'
+      ,'Dashboard': 'Tableau de bord'
+      ,'Coming soon': 'Bientôt disponible'
+      ,'View detailed glucose trends, CGM data, and historical readings.': 'Consultez les tendances détaillées du glucose, les données du CGM et l’historique des lectures.'
+      ,'Review basal rates, bolus history, and insulin delivery settings.': 'Consultez les débits basaux, l’historique des bolus et les paramètres d’administration d’insuline.'
+      ,'Check pump connectivity, battery, reservoir, and sensor status.': 'Vérifiez la connectivité de la pompe, la batterie, le réservoir et l’état du capteur.'
+      ,'Generate and export clinical reports for you and your care team.': 'Générez et exportez des rapports cliniques pour vous et votre équipe soignante.'
+      ,'Manage your preferences, alerts, and account settings.': 'Gérez vos préférences, vos alertes et les paramètres de votre compte.'
+      ,'View and edit your personal and medical profile information.': 'Consultez et modifiez vos informations personnelles et médicales.'
+      ,'Page not found': 'Page introuvable'
+      ,"The page you're looking for doesn't exist or may have moved.": 'La page que vous recherchez n’existe pas ou a peut-être été déplacée.'
+      ,'Go Home': 'Accueil'
+      ,'Go to Dashboard': 'Aller au tableau de bord'
     },
     de: {
       'Welcome to MiniMed': 'Willkommen bei MiniMed',
@@ -133,6 +159,19 @@ class TranslationService {
       'In Range': 'Im Bereich',
       'Above Range': 'Über dem Bereich',
       'Basal Delivery': 'Basale Abgabe'
+      ,'Profile': 'Profil'
+      ,'Dashboard': 'Übersicht'
+      ,'Coming soon': 'Demnächst verfügbar'
+      ,'View detailed glucose trends, CGM data, and historical readings.': 'Detaillierte Glukosetrends, CGM-Daten und historische Messwerte anzeigen.'
+      ,'Review basal rates, bolus history, and insulin delivery settings.': 'Basalraten, Bolushistorie und Einstellungen zur Insulinabgabe überprüfen.'
+      ,'Check pump connectivity, battery, reservoir, and sensor status.': 'Pumpenverbindung, Batterie, Reservoir und Sensorstatus überprüfen.'
+      ,'Generate and export clinical reports for you and your care team.': 'Klinische Berichte für Sie und Ihr Behandlungsteam erstellen und exportieren.'
+      ,'Manage your preferences, alerts, and account settings.': 'Ihre Präferenzen, Alarme und Kontoeinstellungen verwalten.'
+      ,'View and edit your personal and medical profile information.': 'Ihre persönlichen und medizinischen Profildaten anzeigen und bearbeiten.'
+      ,'Page not found': 'Seite nicht gefunden'
+      ,"The page you're looking for doesn't exist or may have moved.": 'Die gesuchte Seite existiert nicht oder wurde möglicherweise verschoben.'
+      ,'Go Home': 'Zur Startseite'
+      ,'Go to Dashboard': 'Zum Dashboard'
     }
   };
   
