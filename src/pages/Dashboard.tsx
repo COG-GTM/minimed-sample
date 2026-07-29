@@ -3,27 +3,13 @@ import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import LanguageDropdown from '@/components/LanguageDropdown';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import DashboardHeader from '@/components/DashboardHeader';
 import {
   Activity,
-  Bell,
-  ChevronDown,
   Droplet,
   Home,
-  LogOut,
-  Menu,
   Settings,
-  User,
   Wifi,
   FileText,
   Zap,
@@ -64,6 +50,10 @@ const Dashboard = () => {
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
   const [translations, setTranslations] = useState({
     overview: 'Overview',
+    navGlucoseTrend: 'Glucose Trend',
+    navTimeInRange: 'Time in Range',
+    navRecentActivity: 'Recent Activity',
+    dashboardSections: 'Dashboard sections',
     glucoseMonitoring: 'Glucose Monitoring',
     insulinManagement: 'Insulin Management',
     deviceStatus: 'Device Status',
@@ -100,6 +90,10 @@ const Dashboard = () => {
     const loadTranslations = async () => {
       const newTranslations = {
         overview: await t('Overview'),
+        navGlucoseTrend: await t('Glucose Trend'),
+        navTimeInRange: await t('Time in Range'),
+        navRecentActivity: await t('Recent Activity'),
+        dashboardSections: await t('Dashboard sections'),
         glucoseMonitoring: await t('Glucose Monitoring'),
         insulinManagement: await t('Insulin Management'),
         deviceStatus: await t('Device Status'),
@@ -201,60 +195,23 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
-        <div className="flex items-center justify-between px-4 h-20">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span> Dashboard</span>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <LanguageDropdown />
-            
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
-              <Bell className="h-5 w-5 text-white" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
-            </button>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <User className="h-4 w-4 text-medtronic-deepPurple" />
-                  </div>
-                  <span className="hidden md:inline">{user?.name}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>{translations.myAccount}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  {translations.profile}
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  {translations.settings}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  {translations.signOut}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
+      <DashboardHeader
+        userName={user?.name}
+        navItems={[
+          { id: 'overview', label: translations.overview },
+          { id: 'glucose-trend', label: translations.navGlucoseTrend },
+          { id: 'time-in-range', label: translations.navTimeInRange },
+          { id: 'recent-activity', label: translations.navRecentActivity },
+        ]}
+        myAccountLabel={translations.myAccount}
+        dashboardSectionsLabel={translations.dashboardSections}
+        profileLabel={translations.profile}
+        settingsLabel={translations.settings}
+        signOutLabel={translations.signOut}
+        sidebarOpen={sidebarOpen}
+        onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+        onLogout={handleLogout}
+      />
 
       <div className="flex">
         {/* Sidebar */}
@@ -291,7 +248,7 @@ const Dashboard = () => {
         {/* Main Content */}
         <main className="flex-1 p-4 lg:p-6">
           {/* Welcome Message */}
-          <div className="mb-6">
+          <div id="overview" className="mb-6 scroll-mt-20">
             <h1 className="text-2xl font-bold text-gray-900">
               {translations.welcomeBack}, {user?.name}
             </h1>
@@ -395,7 +352,7 @@ const Dashboard = () => {
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {/* Glucose Trend Chart */}
-            <Card className="lg:col-span-2">
+            <Card id="glucose-trend" className="lg:col-span-2 scroll-mt-20">
               <CardHeader>
                 <CardTitle>{translations.glucoseTrend}</CardTitle>
                 <CardDescription>
@@ -438,7 +395,7 @@ const Dashboard = () => {
             </Card>
 
             {/* Time in Range Pie Chart */}
-            <Card>
+            <Card id="time-in-range" className="scroll-mt-20">
               <CardHeader>
                 <CardTitle>{translations.timeInRangeTitle}</CardTitle>
                 <CardDescription>
@@ -480,7 +437,7 @@ const Dashboard = () => {
           </div>
 
           {/* Recent Activity */}
-          <Card>
+          <Card id="recent-activity" className="scroll-mt-20">
             <CardHeader>
               <CardTitle>{translations.recentActivity}</CardTitle>
               <CardDescription>
