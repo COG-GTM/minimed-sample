@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import LanguageDropdown from '@/components/LanguageDropdown';
 import {
@@ -50,6 +50,8 @@ const DashboardHeader = ({
   onLogout,
 }: DashboardHeaderProps) => {
   const [activeSection, setActiveSection] = useState(navItems[0]?.id ?? '');
+  const isProgrammaticScroll = useRef(false);
+  const scrollEndTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     const sections = navItems
@@ -60,6 +62,8 @@ const DashboardHeader = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isProgrammaticScroll.current) return;
+
         const visibleSections = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -75,7 +79,38 @@ const DashboardHeader = ({
     return () => observer.disconnect();
   }, [navItems]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!isProgrammaticScroll.current) return;
+
+      if (scrollEndTimeout.current !== null) {
+        window.clearTimeout(scrollEndTimeout.current);
+      }
+      scrollEndTimeout.current = window.setTimeout(() => {
+        isProgrammaticScroll.current = false;
+        scrollEndTimeout.current = null;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollEndTimeout.current !== null) {
+        window.clearTimeout(scrollEndTimeout.current);
+      }
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    isProgrammaticScroll.current = true;
+    if (scrollEndTimeout.current !== null) {
+      window.clearTimeout(scrollEndTimeout.current);
+    }
+    scrollEndTimeout.current = window.setTimeout(() => {
+      isProgrammaticScroll.current = false;
+      scrollEndTimeout.current = null;
+    }, 1000);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
