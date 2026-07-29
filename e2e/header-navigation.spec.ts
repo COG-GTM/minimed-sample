@@ -44,6 +44,19 @@ test.describe('Dashboard header quick navigation (desktop)', () => {
     await expect(link).toHaveClass(/bg-white\/20/);
   });
 
+  test('active highlight stays on the clicked link after scrolling settles', async ({ page }) => {
+    const nav = headerNav(page);
+    const link = nav.getByRole('button', { name: 'Time in Range' });
+    await link.click();
+    await expect(link).toHaveClass(/bg-white\/20/);
+    await expect(page.locator('#time-in-range')).toBeInViewport();
+    await page.waitForTimeout(1200);
+    await expect(link).toHaveClass(/bg-white\/20/);
+    for (const other of NAV_ITEMS.filter((i) => i.label !== 'Time in Range')) {
+      await expect(nav.getByRole('button', { name: other.label })).not.toHaveClass(/bg-white\/20/);
+    }
+  });
+
   test('clicking the dashboard title scrolls back to top', async ({ page }) => {
     await headerNav(page).getByRole('button', { name: 'Recent Activity' }).click();
     await expect
