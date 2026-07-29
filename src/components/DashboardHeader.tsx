@@ -50,8 +50,7 @@ const DashboardHeader = ({
   onLogout,
 }: DashboardHeaderProps) => {
   const [activeSection, setActiveSection] = useState(navItems[0]?.id ?? '');
-  const isProgrammaticScroll = useRef(false);
-  const scrollEndTimeout = useRef<number | null>(null);
+  const hasClickedOverride = useRef(false);
 
   useEffect(() => {
     const sections = navItems
@@ -62,7 +61,7 @@ const DashboardHeader = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (isProgrammaticScroll.current) return;
+        if (hasClickedOverride.current) return;
 
         const visibleSections = entries
           .filter((entry) => entry.isIntersecting)
@@ -80,37 +79,28 @@ const DashboardHeader = ({
   }, [navItems]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!isProgrammaticScroll.current) return;
-
-      if (scrollEndTimeout.current !== null) {
-        window.clearTimeout(scrollEndTimeout.current);
+    const clearClickedOverride = () => {
+      hasClickedOverride.current = false;
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' ', 'Home', 'End'].includes(event.key)) {
+        clearClickedOverride();
       }
-      scrollEndTimeout.current = window.setTimeout(() => {
-        isProgrammaticScroll.current = false;
-        scrollEndTimeout.current = null;
-      }, 150);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', clearClickedOverride, { passive: true });
+    window.addEventListener('touchmove', clearClickedOverride, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollEndTimeout.current !== null) {
-        window.clearTimeout(scrollEndTimeout.current);
-      }
+      window.removeEventListener('wheel', clearClickedOverride);
+      window.removeEventListener('touchmove', clearClickedOverride);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
-    isProgrammaticScroll.current = true;
-    if (scrollEndTimeout.current !== null) {
-      window.clearTimeout(scrollEndTimeout.current);
-    }
-    scrollEndTimeout.current = window.setTimeout(() => {
-      isProgrammaticScroll.current = false;
-      scrollEndTimeout.current = null;
-    }, 1000);
+    hasClickedOverride.current = true;
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
