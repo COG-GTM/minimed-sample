@@ -57,6 +57,18 @@ test.describe('Dashboard header quick navigation (desktop)', () => {
     }
   });
 
+  test('manual wheel scroll after a nav click resumes scroll-based highlighting', async ({ page }) => {
+    const nav = headerNav(page);
+    const clicked = nav.getByRole('button', { name: 'Recent Activity' });
+    await clicked.click();
+    await expect(page.locator('#recent-activity')).toBeInViewport();
+    await expect(clicked).toHaveClass(/bg-white\/20/);
+
+    await page.mouse.wheel(0, -20000);
+    await expect(nav.getByRole('button', { name: 'Overview' })).toHaveClass(/bg-white\/20/);
+    await expect(clicked).not.toHaveClass(/bg-white\/20/);
+  });
+
   test('clicking the dashboard title scrolls back to top', async ({ page }) => {
     await headerNav(page).getByRole('button', { name: 'Recent Activity' }).click();
     await expect
