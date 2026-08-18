@@ -4,6 +4,13 @@ import { LanguageProvider } from '@/contexts/LanguageContext';
 import Landing from '@/pages/Landing';
 import Auth from '@/pages/Auth';
 import Dashboard from '@/pages/Dashboard';
+import DashboardLayout from '@/components/DashboardLayout';
+import GlucoseMonitoring from '@/pages/GlucoseMonitoring';
+import InsulinManagement from '@/pages/InsulinManagement';
+import Devices from '@/pages/Devices';
+import Reports from '@/pages/Reports';
+import SettingsPage from '@/pages/SettingsPage';
+import Profile from '@/pages/Profile';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 function App() {
@@ -18,10 +25,18 @@ function App() {
               path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <DashboardLayout />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="glucose" element={<GlucoseMonitoring />} />
+              <Route path="insulin" element={<InsulinManagement />} />
+              <Route path="devices" element={<Devices />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="profile" element={<Profile />} />
+            </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AuthProvider>

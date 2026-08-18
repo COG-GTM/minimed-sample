@@ -56,13 +56,13 @@ const Landing = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#products" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#support" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#healthcare" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.healthcare')}
               </a>
             </nav>
@@ -95,13 +95,13 @@ const Landing = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-2 space-y-1">
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#products" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#support" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#healthcare" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.healthcare')}
               </a>
               <div className="py-2">
@@ -120,7 +120,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-minimed">
+      <section id="products" className="relative overflow-hidden bg-gradient-minimed scroll-mt-20">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -166,7 +166,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="healthcare" className="py-20 bg-gray-50 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-medtronic-deepPurple mb-4">
@@ -195,7 +195,7 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-medtronic">
+      <section id="support" className="py-20 bg-gradient-medtronic scroll-mt-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
             Ready to Take Control?
