@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     /* Medtronic/MiniMed inspired color scheme */
     --background: 0 0% 100%;
