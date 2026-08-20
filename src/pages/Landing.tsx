@@ -56,13 +56,13 @@ const Landing = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#products" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#support" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#healthcare" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.healthcare')}
               </a>
             </nav>
@@ -95,13 +95,13 @@ const Landing = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <div className="px-4 py-2 space-y-1">
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#products" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#support" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#healthcare" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.healthcare')}
               </a>
               <div className="py-2">
@@ -120,7 +120,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-minimed">
+      <section id="home" className="relative overflow-hidden bg-gradient-minimed">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -166,7 +166,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="products" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-medtronic-deepPurple mb-4">
@@ -195,7 +195,7 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-medtronic">
+      <section id="healthcare" className="py-20 bg-gradient-medtronic">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
             Ready to Take Control?
@@ -214,43 +214,43 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-medtronic-deepPurple text-gray-300 py-12">
+      <footer id="support" className="bg-medtronic-deepPurple text-gray-300 py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h4 className="text-white font-semibold mb-4">Products</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">MiniMed 780G</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Guardian Sensors</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">CareLink Software</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">MiniMed 780G</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">Guardian Sensors</a></li>
+                <li><a href="#products" className="hover:text-white transition-colors">CareLink Software</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Support</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">Customer Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Training</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Resources</a></li>
+                <li><a href="#healthcare" className="hover:text-white transition-colors">Customer Service</a></li>
+                <li><a href="#healthcare" className="hover:text-white transition-colors">Training</a></li>
+                <li><a href="#healthcare" className="hover:text-white transition-colors">Resources</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#home" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#home" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#home" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Legal</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Use</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Regulatory</a></li>
+                <li><a href="#legal" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#legal" className="hover:text-white transition-colors">Terms of Use</a></li>
+                <li><a href="#legal" className="hover:text-white transition-colors">Regulatory</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center">
+          <div id="legal" className="border-t border-gray-800 pt-8 text-center">
             <p className="text-sm">
               © 2024 MiniMed Dashboard. This is a demonstration platform inspired by Medtronic systems.
             </p>
