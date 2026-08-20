@@ -11,6 +11,15 @@ test.describe('Landing page anchor navigation', () => {
     }
   });
 
+  test('anchor sections have scroll offset for the sticky header', async ({ page }) => {
+    for (const id of ['home', 'products', 'healthcare', 'support']) {
+      const margin = await page
+        .locator(`#${id}`)
+        .evaluate((el) => getComputedStyle(el).scrollMarginTop);
+      expect(margin, `#${id} scroll-margin-top`).toBe('80px');
+    }
+  });
+
   test('html has smooth scroll behavior', async ({ page }) => {
     const behavior = await page.evaluate(
       () => getComputedStyle(document.documentElement).scrollBehavior

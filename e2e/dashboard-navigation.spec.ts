@@ -50,6 +50,12 @@ test.describe('Dashboard sidebar navigation', () => {
     await expect(sidebarItem(page, 'Device Status')).toHaveClass(activeClass);
     await expect(page.locator('main h1', { hasText: 'Device Status' })).toBeVisible();
   });
+
+  test('trailing slash in the URL still highlights the matching sidebar item', async ({ page }) => {
+    await page.goto('/dashboard/devices/');
+    await expect(sidebarItem(page, 'Device Status')).toHaveClass(activeClass);
+    await expect(page.locator('main h1', { hasText: 'Device Status' })).toBeVisible();
+  });
 });
 
 test.describe('Dashboard user dropdown', () => {
@@ -94,6 +100,19 @@ test.describe('Dashboard mobile sidebar', () => {
     await expect(aside).toHaveClass(/translate-x-0/);
     await sidebarItem(page, 'Reports').click();
     await expect(page).toHaveURL(/\/dashboard\/reports$/);
+    await expect(aside).toHaveClass(/-translate-x-full/);
+  });
+
+  test('sidebar closes when the route changes via browser back', async ({ page }) => {
+    await login(page);
+    const aside = page.locator('aside');
+    await page.locator('header button.lg\\:hidden').click();
+    await sidebarItem(page, 'Reports').click();
+    await expect(page).toHaveURL(/\/dashboard\/reports$/);
+    await page.locator('header button.lg\\:hidden').click();
+    await expect(aside).toHaveClass(/translate-x-0/);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/dashboard$/);
     await expect(aside).toHaveClass(/-translate-x-full/);
   });
 
