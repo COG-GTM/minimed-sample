@@ -120,7 +120,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative overflow-hidden bg-gradient-minimed">
+      <section id="home" className="relative overflow-hidden bg-gradient-minimed scroll-mt-20">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -166,7 +166,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section id="products" className="py-20 bg-gray-50">
+      <section id="products" className="py-20 bg-gray-50 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-medtronic-deepPurple mb-4">
@@ -195,7 +195,7 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="healthcare" className="py-20 bg-gradient-medtronic">
+      <section id="healthcare" className="py-20 bg-gradient-medtronic scroll-mt-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
             Ready to Take Control?
@@ -214,7 +214,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer id="support" className="bg-medtronic-deepPurple text-gray-300 py-12">
+      <footer id="support" className="bg-medtronic-deepPurple text-gray-300 py-12 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>

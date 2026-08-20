@@ -62,6 +62,10 @@ const DashboardLayout = () => {
     loadTranslations();
   }, [t]);
 
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -80,6 +84,8 @@ const DashboardLayout = () => {
     navigate(path);
     setSidebarOpen(false);
   };
+
+  const currentPath = location.pathname.replace(/\/+$/, '') || '/';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -146,7 +152,7 @@ const DashboardLayout = () => {
           <div className="p-4">
             <nav className="space-y-1">
               {sidebarItems.map((item) => {
-                const isActive = location.pathname === item.path;
+                const isActive = currentPath === item.path;
                 return (
                   <button
                     key={item.path}
