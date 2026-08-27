@@ -1,21 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageDropdown from '@/components/LanguageDropdown';
+import PublicHeader from '@/components/PublicHeader';
 import { 
   Activity, 
   Shield, 
   Smartphone, 
-  Share2, 
-  Menu,
-  X
+  Share2
 } from 'lucide-react';
-import { useState } from 'react';
 
 const Landing = () => {
   const navigate = useNavigate();
   const { tSync } = useLanguage();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const features = [
     {
@@ -43,81 +39,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl font-bold">
-                <span className="text-white">MiniMed</span>
-                <span className="text-xs align-super">™</span>
-              </div>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
-                {tSync('nav.products')}
-              </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
-                {tSync('nav.support')}
-              </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
-                {tSync('nav.healthcare')}
-              </a>
-            </nav>
-
-            {/* Right Section */}
-            <div className="flex items-center space-x-4">
-              {/* Language Dropdown */}
-              <LanguageDropdown className="hidden md:flex" />
-
-              {/* Sign In Button */}
-              <Button 
-                onClick={() => navigate('/auth')}
-                className="hidden md:inline-flex bg-white text-medtronic-deepPurple hover:bg-gray-100 font-semibold px-6"
-              >
-                {tSync('nav.signin')}
-              </Button>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden p-2"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t">
-            <div className="px-4 py-2 space-y-1">
-              <a href="#" className="block py-2 text-gray-600">
-                {tSync('nav.products')}
-              </a>
-              <a href="#" className="block py-2 text-gray-600">
-                {tSync('nav.support')}
-              </a>
-              <a href="#" className="block py-2 text-gray-600">
-                {tSync('nav.healthcare')}
-              </a>
-              <div className="py-2">
-                <LanguageDropdown variant="mobile" />
-              </div>
-              <Button 
-                variant="medical" 
-                onClick={() => navigate('/auth')}
-                className="w-full"
-              >
-                {tSync('nav.signin')}
-              </Button>
-            </div>
-          </div>
-        )}
-      </header>
+      <PublicHeader />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-minimed">
