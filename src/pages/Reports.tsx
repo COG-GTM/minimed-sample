@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { format, subDays } from 'date-fns';
+import { format, isSameDay, subDays } from 'date-fns';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -27,9 +27,10 @@ const Reports = () => {
   });
 
   useEffect(() => {
+    const readings = generateGlucoseReadings(24 * 7);
     const days = Array.from({ length: 7 }, (_, i) => {
       const date = subDays(new Date(), 6 - i);
-      const tir = calculateTimeInRange(generateGlucoseReadings(24));
+      const tir = calculateTimeInRange(readings.filter(r => isSameDay(r.timestamp, date)));
       return {
         day: format(date, 'EEE'),
         below: Math.round(tir.below),

@@ -4,6 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 export function useTranslations<T extends Record<string, string>>(source: T): T {
   const { t } = useLanguage();
   const [translations, setTranslations] = useState<T>(source);
+  const sourceKey = JSON.stringify(source);
 
   useEffect(() => {
     let cancelled = false;
@@ -20,7 +21,7 @@ export function useTranslations<T extends Record<string, string>>(source: T): T 
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t]);
+  }, [t, sourceKey]);
 
   return translations;
 }

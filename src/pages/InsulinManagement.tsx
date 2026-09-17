@@ -22,7 +22,8 @@ const InsulinManagement = () => {
   });
 
   useEffect(() => {
-    setDeliveries(generateInsulinDeliveries(7));
+    const now = Date.now();
+    setDeliveries(generateInsulinDeliveries(7).filter(d => d.timestamp.getTime() <= now));
   }, []);
 
   const sum = (type?: InsulinDelivery['type']) =>
