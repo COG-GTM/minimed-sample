@@ -32,7 +32,7 @@ const DeviceStatusPage = () => {
   if (!device) return null;
 
   const details = [
-    { label: labels.model, value: device.name },
+    { label: labels.model, value: device.model },
     { label: labels.serialNumber, value: device.serialNumber },
     { label: labels.firmware, value: device.firmwareVersion },
     { label: labels.lastSync, value: format(device.lastSync, 'MMM d, yyyy HH:mm') },

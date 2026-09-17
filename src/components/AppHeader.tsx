@@ -88,7 +88,7 @@ const AppHeader = ({ sidebarOpen, onToggleSidebar }: AppHeaderProps) => {
                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                   <User className="h-4 w-4 text-medtronic-deepPurple" />
                 </div>
-                <span className="hidden md:inline">{user?.name}</span>
+                <span className="sr-only md:not-sr-only">{user?.name}</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
