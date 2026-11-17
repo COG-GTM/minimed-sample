@@ -14,8 +14,14 @@ test.describe('Dashboard header', () => {
   test('skip link moves focus to main content', async ({ page }) => {
     await login(page);
     await page.reload();
-    await page.keyboard.press('Tab');
-    await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused();
+    const skipLink = page.getByRole('link', { name: 'Skip to main content' });
+    await expect(skipLink).toBeAttached();
+    await expect(page.locator('main#main-content')).toBeVisible();
+    await expect(async () => {
+      await page.locator('body').focus();
+      await page.keyboard.press('Tab');
+      await expect(skipLink).toBeFocused({ timeout: 1000 });
+    }).toPass();
     await page.keyboard.press('Enter');
     await expect(page.locator('main#main-content')).toBeFocused();
   });
