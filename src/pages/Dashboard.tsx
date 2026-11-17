@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import LanguageDropdown from '@/components/LanguageDropdown';
+import BrandLogo from '@/components/BrandLogo';
+import SkipToContent from '@/components/SkipToContent';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,9 +58,10 @@ import { format } from 'date-fns';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const { t } = useLanguage();
+  const { t, tSync } = useLanguage();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(3);
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
@@ -201,32 +204,52 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SkipToContent />
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
-        <div className="flex items-center justify-between px-4 h-20">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap gap-2 items-center justify-between px-4 py-3 min-h-20">
+          <div className="flex items-center gap-2 md:gap-4 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label={tSync('header.toggleSidebar')}
+              aria-expanded={sidebarOpen}
+              aria-controls="dashboard-sidebar"
               className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
             >
               <Menu className="h-5 w-5" />
             </button>
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span> Dashboard</span>
-            </div>
+            <BrandLogo to="/dashboard" className="text-white" />
+            <span className="hidden md:block text-sm text-white/90 border-l border-white/30 pl-4">
+              {sidebarItems.find(item => item.active)?.label}
+            </span>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-1 sm:gap-4">
             <LanguageDropdown />
             
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
-              <Bell className="h-5 w-5 text-white" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button aria-label={`${tSync('header.notifications')} (${unreadCount})`} className="relative p-2 hover:bg-white/20 rounded-lg text-white">
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 text-xs bg-medtronic-coral rounded-full">{unreadCount}</span>}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-72">
+                <DropdownMenuLabel>{tSync('header.notifications')}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {['header.notificationGlucose', 'header.notificationReport', 'header.notificationDevice'].map(key => (
+                  <DropdownMenuItem key={key} className="whitespace-normal">{tSync(key)}</DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem disabled={unreadCount === 0} onSelect={() => setUnreadCount(0)}>
+                  {tSync('header.markRead')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
+                <Button aria-label={tSync('header.userMenu')} variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                     <User className="h-4 w-4 text-medtronic-deepPurple" />
                   </div>
@@ -236,6 +259,11 @@ const Dashboard = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>{translations.myAccount}</DropdownMenuLabel>
+                <div className="px-2 pb-2 text-sm space-y-1">
+                  <p className="font-medium">{user?.name}</p>
+                  <p className="break-all text-gray-500">{user?.email}</p>
+                  <p className="text-medtronic-purple">{tSync(user?.role === 'healthcare_provider' ? 'header.doctor' : 'header.patient')}</p>
+                </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
@@ -258,7 +286,7 @@ const Dashboard = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className={`${
+        <aside id="dashboard-sidebar" className={`${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r transition-transform duration-300 mt-20 lg:mt-0`}>
           <div className="p-4">
@@ -289,7 +317,7 @@ const Dashboard = () => {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main id="main-content" tabIndex={-1} className="scroll-mt-24 flex-1 min-w-0 p-4 lg:p-6">
           {/* Welcome Message */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900">
