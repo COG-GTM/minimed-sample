@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import LanguageDropdown from '@/components/LanguageDropdown';
+import BrandLogo from '@/components/BrandLogo';
+import SkipToContent from '@/components/SkipToContent';
 import { Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 
 const Auth = () => {
@@ -109,18 +111,22 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-gradient-minimed flex flex-col">
       {/* Header */}
-      <header className="p-4">
-        <div className="container mx-auto flex justify-between items-center">
+      <SkipToContent />
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div className="container mx-auto px-4 py-4 min-h-20 flex flex-wrap gap-3 justify-between items-center">
+          <BrandLogo className="text-medtronic-deepPurple" />
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6">
           <Link to="/" className="inline-flex items-center space-x-2 text-medtronic-deepPurple hover:text-medtronic-purple transition-colors font-medium">
             <ArrowLeft className="h-4 w-4" />
             <span>{translations.backToHome}</span>
           </Link>
           <LanguageDropdown />
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center p-4">
+      <main id="main-content" tabIndex={-1} className="scroll-mt-24 flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md shadow-2xl bg-white/95 backdrop-blur-sm border-0">
           <CardHeader className="space-y-1">
             <div className="flex items-center justify-center mb-4">
@@ -250,8 +256,7 @@ const Auth = () => {
             </div>
           </CardFooter>
         </Card>
-      </div>
-
+      </main>
       {/* Demo Credentials Info */}
       <div className="p-4">
         <div className="container mx-auto max-w-md">

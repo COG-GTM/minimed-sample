@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageDropdown from '@/components/LanguageDropdown';
+import BrandLogo from '@/components/BrandLogo';
+import SkipToContent from '@/components/SkipToContent';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   Activity, 
   Shield, 
@@ -10,12 +13,34 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Landing = () => {
   const navigate = useNavigate();
   const { tSync } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const [scrolled, setScrolled] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mobileMenuOpen]);
 
   const features = [
     {
@@ -43,26 +68,22 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-gradient-medtronic text-white">
+      <SkipToContent />
+      <header className={`sticky top-0 z-50 bg-gradient-medtronic text-white transition-shadow ${scrolled ? 'shadow-xl backdrop-blur-lg' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl font-bold">
-                <span className="text-white">MiniMed</span>
-                <span className="text-xs align-super">™</span>
-              </div>
-            </div>
+            <BrandLogo className="text-white" />
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="#products" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#support" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="text-white/90 hover:text-white transition-colors font-medium">
+              <a href="#healthcare" className="text-white/90 hover:text-white transition-colors font-medium">
                 {tSync('nav.healthcare')}
               </a>
             </nav>
@@ -70,19 +91,23 @@ const Landing = () => {
             {/* Right Section */}
             <div className="flex items-center space-x-4">
               {/* Language Dropdown */}
-              <LanguageDropdown className="hidden md:flex" />
+              <LanguageDropdown className="hidden lg:flex" />
 
               {/* Sign In Button */}
               <Button 
-                onClick={() => navigate('/auth')}
-                className="hidden md:inline-flex bg-white text-medtronic-deepPurple hover:bg-gray-100 font-semibold px-6"
+                onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth')}
+                className="hidden lg:inline-flex bg-white text-medtronic-deepPurple hover:bg-gray-100 font-semibold px-6"
               >
-                {tSync('nav.signin')}
+                {tSync(isAuthenticated ? 'header.dashboard' : 'nav.signin')}
               </Button>
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden p-2"
+                ref={menuButton}
+                aria-label={tSync(mobileMenuOpen ? 'header.closeMenu' : 'header.openMenu')}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="landing-menu"
+                className="lg:hidden p-2"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -92,35 +117,41 @@ const Landing = () => {
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t">
+          <nav id="landing-menu" hidden={!mobileMenuOpen} className="lg:hidden bg-white border-t text-gray-600">
             <div className="px-4 py-2 space-y-1">
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#products" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.products')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#support" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.support')}
               </a>
-              <a href="#" className="block py-2 text-gray-600">
+              <a href="#healthcare" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-gray-600">
                 {tSync('nav.healthcare')}
               </a>
               <div className="py-2">
                 <LanguageDropdown variant="mobile" />
               </div>
-              <Button 
-                variant="medical" 
-                onClick={() => navigate('/auth')}
-                className="w-full"
-              >
-                {tSync('nav.signin')}
-              </Button>
+              {!isAuthenticated && (
+                <Button
+                  variant="medical"
+                  onClick={() => { setMobileMenuOpen(false); navigate('/auth'); }}
+                  className="w-full"
+                >
+                  {tSync('nav.signin')}
+                </Button>
+              )}
+              {isAuthenticated && (
+                <Button variant="medical" className="w-full" onClick={() => { setMobileMenuOpen(false); navigate('/dashboard'); }}>
+                  {tSync('header.goDashboard')}
+                </Button>
+              )}
             </div>
-          </div>
-        )}
+          </nav>
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-minimed">
+      <main id="main-content" tabIndex={-1} className="scroll-mt-24">
+      <section id="products" className="scroll-mt-24 relative overflow-hidden bg-gradient-minimed">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -166,7 +197,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="healthcare" className="scroll-mt-24 py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-medtronic-deepPurple mb-4">
@@ -213,6 +244,7 @@ const Landing = () => {
         </div>
       </section>
 
+      </main>
       {/* Footer */}
       <footer className="bg-medtronic-deepPurple text-gray-300 py-12">
         <div className="container mx-auto px-4">
@@ -225,7 +257,7 @@ const Landing = () => {
                 <li><a href="#" className="hover:text-white transition-colors">CareLink Software</a></li>
               </ul>
             </div>
-            <div>
+            <div id="support" className="scroll-mt-24">
               <h4 className="text-white font-semibold mb-4">Support</h4>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-white transition-colors">Customer Service</a></li>
