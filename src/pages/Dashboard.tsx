@@ -207,14 +207,14 @@ const Dashboard = () => {
       <SkipToContent />
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
-        <div className="flex gap-2 items-center justify-between px-4 h-20">
+        <div className="flex gap-2 items-center justify-between px-2 sm:px-4 h-20">
           <div className="flex items-center gap-2 md:gap-4 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               aria-label={tSync('header.toggleSidebar')}
               aria-expanded={sidebarOpen}
               aria-controls="dashboard-sidebar"
-              className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
+              className="lg:hidden shrink-0 p-2 hover:bg-white/20 rounded-lg text-white"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -224,8 +224,8 @@ const Dashboard = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-4">
-            <LanguageDropdown />
+          <div className="flex shrink-0 items-center gap-1 sm:gap-4">
+            <LanguageDropdown compact />
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -249,12 +249,12 @@ const Dashboard = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button aria-label={tSync('header.userMenu')} variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
+                <Button aria-label={tSync('header.userMenu')} variant="ghost" className="flex items-center gap-0 p-2 sm:gap-2 sm:px-4 text-white hover:bg-white/20">
                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                     <User className="h-4 w-4 text-medtronic-deepPurple" />
                   </div>
                   <span className="hidden md:inline">{user?.name}</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="hidden sm:block h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">

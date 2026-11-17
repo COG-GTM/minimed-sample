@@ -119,4 +119,35 @@ test.describe('Dashboard header (mobile)', () => {
       expect(sidebarBox?.y).toBe(80);
     });
   }
+
+  for (const width of [320, 400, 768, 1024]) {
+    test(`header controls do not overlap at ${width}px in any language`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await login(page, 'doctor');
+      const header = page.locator('header');
+
+      for (const language of ['English', 'Español', 'Français', 'Deutsch']) {
+        const languagePicker = header.getByRole('button', { name: /English|Español|Français|Deutsch/ });
+        await languagePicker.click();
+        await page.getByRole('menuitem', { name: new RegExp(language) }).click();
+        await expect(languagePicker).toHaveAccessibleName(new RegExp(language));
+
+        const controls = header.locator('a, button').filter({ visible: true });
+        const boxes = await controls.evaluateAll(elements => elements.map(element => {
+          const { x, y, width, height } = element.getBoundingClientRect();
+          return { label: element.getAttribute('aria-label') || element.textContent, x, y, width, height };
+        }));
+
+        for (const [index, box] of boxes.entries()) {
+          expect(box.x, `${language}: ${box.label} left edge`).toBeGreaterThanOrEqual(0);
+          expect(box.x + box.width, `${language}: ${box.label} right edge`).toBeLessThanOrEqual(width);
+          for (const other of boxes.slice(index + 1)) {
+            const overlaps = box.x < other.x + other.width && box.x + box.width > other.x
+              && box.y < other.y + other.height && box.y + box.height > other.y;
+            expect(overlaps, `${language}: ${box.label} overlaps ${other.label}`).toBe(false);
+          }
+        }
+      }
+    });
+  }
 });
