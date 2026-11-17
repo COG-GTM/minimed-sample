@@ -155,3 +155,22 @@ test.describe('Landing header (mobile)', () => {
     await expect(page).toHaveURL(/\/dashboard$/);
   });
 });
+
+test.describe('Landing support anchor', () => {
+  test('#support targets the footer Support column, not the CTA section', async ({ page }) => {
+    await page.goto('/');
+    const support = page.locator('#support');
+    await expect(support).toHaveCount(1);
+    await expect(support.locator('xpath=ancestor::footer')).toHaveCount(1);
+    await expect(support.getByRole('heading', { name: 'Support' })).toBeVisible();
+    await expect(support.getByRole('link', { name: 'Customer Service' })).toBeVisible();
+    await expect(page.locator('section', { hasText: 'Ready to Take Control?' })).not.toHaveAttribute('id', 'support');
+  });
+
+  test('Support nav link scrolls the footer Support heading into view', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('navigation').first().getByRole('link', { name: 'Support' }).click();
+    await expect(page).toHaveURL(/#support$/);
+    await expect(page.locator('#support').getByRole('heading', { name: 'Support' })).toBeInViewport();
+  });
+});

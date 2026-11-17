@@ -97,4 +97,20 @@ test.describe('Dashboard header (mobile)', () => {
     await expect(page.getByRole('button', { name: 'Notifications (3)' })).toBeInViewport();
     await expect(page.getByRole('button', { name: 'User menu' })).toBeInViewport();
   });
+
+  for (const width of [320, 375, 768]) {
+    test(`header stays a single 80px row at ${width}px so the sidebar offset matches`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await login(page);
+      const header = page.locator('header').first();
+      const headerBox = await header.boundingBox();
+      expect(headerBox?.height).toBe(80);
+
+      await page.getByRole('button', { name: /sidebar/i }).click();
+      const sidebar = page.locator('aside#dashboard-sidebar');
+      await expect(sidebar).toBeInViewport();
+      const sidebarBox = await sidebar.boundingBox();
+      expect(sidebarBox?.y).toBe(80);
+    });
+  }
 });
