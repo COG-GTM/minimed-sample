@@ -36,6 +36,10 @@ test.describe('Landing header (desktop)', () => {
     await nav.getByRole('link', { name: 'Support' }).click();
     await expect(page).toHaveURL(/#support$/);
     await expect(page.locator('#support')).toBeInViewport();
+
+    await nav.getByRole('link', { name: 'Products' }).click();
+    await expect(page).toHaveURL(/#products$/);
+    await expect(page.locator('section#products')).toBeInViewport();
   });
 
   test('sticky header stays visible and gains shadow after scrolling', async ({ page }) => {
@@ -69,10 +73,13 @@ test.describe('Landing header (desktop)', () => {
   });
 
   test('desktop nav is hidden below the lg breakpoint', async ({ page }) => {
-    await page.setViewportSize({ width: 1000, height: 800 });
+    await page.setViewportSize({ width: 1023, height: 800 });
     await page.goto('/');
     await expect(page.locator('header nav').first().getByRole('link', { name: 'Products' })).toBeHidden();
     await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible();
+    await page.setViewportSize({ width: 1024, height: 800 });
+    await expect(page.locator('header nav').first().getByRole('link', { name: 'Products' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Open menu' })).toBeHidden();
   });
 
   test('localized labels update when the language changes', async ({ page }) => {

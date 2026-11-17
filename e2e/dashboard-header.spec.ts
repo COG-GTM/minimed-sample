@@ -7,6 +7,8 @@ test.describe('Dashboard header', () => {
     const header = page.locator('header');
     await expect(header.getByRole('link', { name: /MiniMed/ })).toHaveAttribute('href', '/dashboard');
     await expect(header.getByText('Overview', { exact: true })).toBeVisible();
+    await header.getByRole('link', { name: /MiniMed/ }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
   });
 
   test('skip link moves focus to main content', async ({ page }) => {
@@ -83,6 +85,9 @@ test.describe('Dashboard header (mobile)', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(sidebar).toHaveClass(/translate-x-0/);
     await expect(sidebar).toBeInViewport();
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(sidebar).toHaveClass(/-translate-x-full/);
   });
 
   test('active section title is hidden on small screens; controls stay in view', async ({ page }) => {
