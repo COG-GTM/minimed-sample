@@ -207,7 +207,7 @@ const Dashboard = () => {
       <SkipToContent />
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
-        <div className="flex flex-wrap gap-2 items-center justify-between px-4 py-3 min-h-20">
+        <div className="flex gap-2 items-center justify-between px-4 h-20">
           <div className="flex items-center gap-2 md:gap-4 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}

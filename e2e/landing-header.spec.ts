@@ -35,7 +35,7 @@ test.describe('Landing header (desktop)', () => {
 
     await nav.getByRole('link', { name: 'Support' }).click();
     await expect(page).toHaveURL(/#support$/);
-    await expect(page.locator('section#support')).toBeInViewport();
+    await expect(page.locator('#support')).toBeInViewport();
   });
 
   test('sticky header stays visible and gains shadow after scrolling', async ({ page }) => {
