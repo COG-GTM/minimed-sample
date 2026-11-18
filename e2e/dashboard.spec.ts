@@ -36,6 +36,36 @@ test.describe('scheduled dashboard refresh', () => {
   });
 });
 
+test('refreshes device metrics and recent deliveries on the dashboard tick', async ({ page }) => {
+  await page.clock.install();
+  await page.addInitScript(() => {
+    Math.random = () => 0.25;
+  });
+  await page.goto('/auth');
+  await page.getByRole('button', { name: 'Demo Patient Account', exact: true }).click();
+
+  const device = page.getByRole('heading', { name: 'Pump Status' }).locator('../..');
+  await expect(device.getByText('80%', { exact: true })).toBeVisible();
+
+  const deliveries = page.getByText(/^\d{2}:\d{2} - \d+\.\d units\b/);
+  await expect(deliveries).toHaveCount(5);
+  await expect(deliveries).toHaveText([
+    '23:00 - 0.9 units', '22:00 - 0.9 units', '21:00 - 0.9 units',
+    '20:00 - 0.9 units', '19:00 - 0.9 units',
+  ]);
+
+  await page.evaluate(() => {
+    Math.random = () => 0.75;
+  });
+  await page.clock.fastForward(30_000);
+
+  await expect(device.getByText('90%', { exact: true })).toBeVisible();
+  await expect(deliveries).toHaveText([
+    '23:00 - 1.1 units', '22:00 - 1.1 units', '21:00 - 1.1 units',
+    '20:00 - 1.1 units', '19:00 - 1.1 units',
+  ]);
+});
+
 test('theme utilities resolve to opaque blue and navy colors', async ({ page }) => {
   await page.goto('/auth');
   const submit = page.getByRole('button', { name: 'Sign In', exact: true });
