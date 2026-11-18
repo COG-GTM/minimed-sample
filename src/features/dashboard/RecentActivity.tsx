@@ -1,12 +1,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { DashboardTranslations } from './useDashboardTranslations';
-import { generateInsulinDeliveries } from '@/utils/mockData';
-import { useState } from 'react';
+import type { InsulinDelivery } from '@/types/insulin';
 import { format } from 'date-fns';
 import { Zap, Droplet } from 'lucide-react';
 
-export function RecentActivity({ translations }: { translations: DashboardTranslations }) {
-  const [deliveries] = useState(() => generateInsulinDeliveries(1).slice(0, 5));
+export function RecentActivity({ translations, deliveries }: {
+  translations: DashboardTranslations;
+  deliveries: InsulinDelivery[];
+}) {
   return (
           <Card>
             <CardHeader>

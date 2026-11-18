@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Activity, Bell, ChevronDown, Droplet, Home, LogOut, Menu, Settings, User, Wifi, FileText } from 'lucide-react';
-import { generateGlucoseReadings, generateDeviceStatus, generateDailySummary } from '@/utils/mockData';
+import { generateGlucoseReadings, generateDeviceStatus, generateDailySummary, generateInsulinDeliveries } from '@/utils/mockData';
 import type { GlucoseReading } from '@/types/glucose';
 import type { DeviceStatus } from '@/types/device';
 import { DashboardMetrics } from '@/features/dashboard/DashboardMetrics';
@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus | null>(null);
   const [dailySummary, setDailySummary] = useState<ReturnType<typeof generateDailySummary> | null>(null);
+  const [deliveries, setDeliveries] = useState(() => generateInsulinDeliveries(1).slice(0, 5));
   const translations = useDashboardTranslations();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const Dashboard = () => {
       setGlucoseReadings(generateGlucoseReadings(24));
       setDeviceStatus(generateDeviceStatus());
       setDailySummary(generateDailySummary());
+      setDeliveries(generateInsulinDeliveries(1).slice(0, 5));
     }, 30000); // Update every 30 seconds
 
     return () => clearInterval(interval);
@@ -164,7 +166,7 @@ const Dashboard = () => {
 
           <DashboardCharts glucoseReadings={glucoseReadings} dailySummary={dailySummary} translations={translations} />
 
-          <RecentActivity translations={translations} />
+          <RecentActivity translations={translations} deliveries={deliveries} />
         </main>
       </div>
     </div>
