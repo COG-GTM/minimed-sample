@@ -11,7 +11,7 @@ import { translationService } from '@/services/translationService';
 
 describe.each([
   ['es', 'Más información', 'Volver al inicio', 'Cerrar sesión', 'Entrega Basal'],
-  ['fr', 'En savoir plus', 'Retour à l’accueil', 'Se déconnecter', 'Livraison Basale'],
+  ['fr', 'En savoir plus', 'Retour à l’accueil', 'Se déconnecter', 'Administration basale'],
   ['de', 'Mehr erfahren', 'Zur Startseite', 'Abmelden', 'Basale Abgabe'],
 ] as const)('%s page localization', (language, learnMore, backHome, signOut, basal) => {
   it('translates landing, auth and dashboard strings immediately', async () => {

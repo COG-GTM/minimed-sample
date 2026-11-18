@@ -75,7 +75,7 @@ class TranslationService {
       'Your glucose levels over the past 24 hours': 'Vos niveaux de glucose au cours des 24 dernières heures',
       'Distribution of glucose levels today': 'Distribution des niveaux de glucose aujourd\'hui',
       'Recent Activity': 'Activité Récente',
-      'Your latest insulin deliveries and glucose readings': 'Vos dernières livraisons d\'insuline et lectures de glucose',
+      'Your latest insulin deliveries and glucose readings': 'Vos dernières administrations d\'insuline et mesures de glucose',
       'Overview': 'Aperçu',
       'Glucose Monitoring': 'Surveillance du Glucose',
       'Insulin Management': 'Gestion de l\'Insuline',
@@ -90,7 +90,7 @@ class TranslationService {
       'Below Range': 'En Dessous de la Plage',
       'In Range': 'Dans la Plage',
       'Above Range': 'Au-Dessus de la Plage',
-      'Basal Delivery': 'Livraison Basale'
+      'Basal Delivery': 'Administration basale'
     },
     de: {
       'Welcome to MiniMed': 'Willkommen bei MiniMed',
