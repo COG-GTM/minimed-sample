@@ -1,3 +1,5 @@
+import { pageTranslations } from './pageTranslations';
+
 class TranslationService {
   private cache: Map<string, string> = new Map();
   
@@ -176,14 +178,22 @@ class TranslationService {
       return this.cache.get(cacheKey)!;
     }
 
-    if (this.mockTranslations[targetLang] && this.mockTranslations[targetLang][text]) {
-      const translation = this.mockTranslations[targetLang][text];
+    const translation = this.translateSync(text, targetLang, sourceLang);
+    if (translation !== text) {
       this.cache.set(cacheKey, translation);
       this.saveCacheToStorage();
       return translation;
     }
 
     return text;
+  }
+
+  translateSync(text: string, targetLang: string, sourceLang: string = 'en'): string {
+    if (targetLang === sourceLang) return text;
+    const additional = pageTranslations[text];
+    return this.mockTranslations[targetLang]?.[text]
+      ?? (targetLang === 'es' || targetLang === 'fr' || targetLang === 'de' ? additional?.[targetLang] : undefined)
+      ?? text;
   }
 
   clearCache(): void {

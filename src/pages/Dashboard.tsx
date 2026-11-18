@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageDropdown from '@/components/LanguageDropdown';
@@ -22,6 +23,7 @@ import { useDashboardTranslations } from '@/features/dashboard/useDashboardTrans
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const { tSync } = useLanguage();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [glucoseReadings, setGlucoseReadings] = useState<GlucoseReading[]>([]);
@@ -68,20 +70,21 @@ const Dashboard = () => {
         <div className="flex items-center justify-between gap-1 px-2 sm:px-4 h-20">
           <div className="flex min-w-0 items-center gap-1 sm:gap-4">
             <button
+              aria-label={tSync('Toggle menu')}
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
             >
               <Menu className="h-5 w-5" />
             </button>
             <div className="flex items-center space-x-2">
-              <span className="text-lg sm:text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span><span className="hidden sm:inline"> Dashboard</span></span>
+              <span className="text-lg sm:text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span><span className="hidden sm:inline"> {tSync('Dashboard')}</span></span>
             </div>
           </div>
 
           <div className="flex shrink-0 items-center gap-0 sm:gap-4">
             <LanguageDropdown className="px-1 sm:px-3 text-white hover:bg-white/20 hover:text-white" />
             
-            <button className="relative hidden sm:block p-2 hover:bg-white/20 rounded-lg">
+            <button aria-label={tSync('Notifications')} className="relative hidden sm:block p-2 hover:bg-white/20 rounded-lg">
               <Bell className="h-5 w-5 text-white" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
             </button>

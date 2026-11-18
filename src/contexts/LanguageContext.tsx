@@ -82,7 +82,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [language]);
 
   const tSync = (key: string): string => {
-    return translations[language][key] || key;
+    return translations[language][key] || translationService.translateSync(key, language);
   };
 
   return (

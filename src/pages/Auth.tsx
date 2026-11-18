@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,7 +12,7 @@ import { Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 const Auth = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { t } = useLanguage();
+  const { tSync } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -21,55 +21,27 @@ const Auth = () => {
     password: '',
     rememberMe: false
   });
-  const [translations, setTranslations] = useState({
-    backToHome: 'Back to Home',
-    welcomeToMiniMed: 'Welcome to MiniMed',
-    signInDescription: 'Sign in to access your diabetes management dashboard',
-    email: 'Email',
-    enterEmail: 'Enter your email',
-    password: 'Password',
-    enterPassword: 'Enter your password',
-    rememberMe: 'Remember me',
-    signIn: 'Sign In',
-    signingIn: 'Signing in...',
-    orContinueWith: 'Or continue with',
-    demoPatientAccount: 'Demo Patient Account',
-    demoHealthcareProvider: 'Demo Healthcare Provider',
-    forgotPassword: 'Forgot your password?',
-    dontHaveAccount: "Don't have an account?",
-    createAccount: 'Create account',
-    demoCredentials: 'Demo Credentials',
-    patient: 'Patient',
-    healthcareProvider: 'Healthcare Provider'
-  });
-
-  useEffect(() => {
-    const loadTranslations = async () => {
-      const newTranslations = {
-        backToHome: await t('Back to Home'),
-        welcomeToMiniMed: await t('Welcome to MiniMed'),
-        signInDescription: await t('Sign in to access your diabetes management dashboard'),
-        email: await t('Email'),
-        enterEmail: await t('Enter your email'),
-        password: await t('Password'),
-        enterPassword: await t('Enter your password'),
-        rememberMe: await t('Remember me'),
-        signIn: await t('Sign In'),
-        signingIn: await t('Signing in...'),
-        orContinueWith: await t('Or continue with'),
-        demoPatientAccount: await t('Demo Patient Account'),
-        demoHealthcareProvider: await t('Demo Healthcare Provider'),
-        forgotPassword: await t('Forgot your password?'),
-        dontHaveAccount: await t("Don't have an account?"),
-        createAccount: await t('Create account'),
-        demoCredentials: await t('Demo Credentials'),
-        patient: await t('Patient'),
-        healthcareProvider: await t('Healthcare Provider')
-      };
-      setTranslations(newTranslations);
-    };
-    loadTranslations();
-  }, [t]);
+  const translations = {
+    backToHome: tSync('Back to Home'),
+    welcomeToMiniMed: tSync('Welcome to MiniMed'),
+    signInDescription: tSync('Sign in to access your diabetes management dashboard'),
+    email: tSync('Email'),
+    enterEmail: tSync('Enter your email'),
+    password: tSync('Password'),
+    enterPassword: tSync('Enter your password'),
+    rememberMe: tSync('Remember me'),
+    signIn: tSync('Sign In'),
+    signingIn: tSync('Signing in...'),
+    orContinueWith: tSync('Or continue with'),
+    demoPatientAccount: tSync('Demo Patient Account'),
+    demoHealthcareProvider: tSync('Demo Healthcare Provider'),
+    forgotPassword: tSync('Forgot your password?'),
+    dontHaveAccount: tSync("Don't have an account?"),
+    createAccount: tSync('Create account'),
+    demoCredentials: tSync('Demo Credentials'),
+    patient: tSync('Patient'),
+    healthcareProvider: tSync('Healthcare Provider')
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,8 +52,7 @@ const Auth = () => {
       await login(formData);
       navigate('/dashboard');
     } catch {
-      const errorMsg = await t('Invalid email or password. Try patient@example.com / demo123');
-      setError(errorMsg);
+      setError('Invalid email or password. Try patient@example.com / demo123');
     } finally {
       setIsLoading(false);
     }
@@ -99,8 +70,7 @@ const Auth = () => {
       await login(credentials);
       navigate('/dashboard');
     } catch {
-      const errorMsg = await t('Login failed. Please try again.');
-      setError(errorMsg);
+      setError('Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -138,7 +108,7 @@ const Auth = () => {
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start space-x-2">
                   <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
-                  <p className="text-sm text-red-700">{error}</p>
+                  <p className="text-sm text-red-700">{tSync(error)}</p>
                 </div>
               )}
 
@@ -168,6 +138,7 @@ const Auth = () => {
                     disabled={isLoading}
                   />
                   <button
+                    aria-label={tSync(showPassword ? 'Hide password' : 'Show password')}
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"

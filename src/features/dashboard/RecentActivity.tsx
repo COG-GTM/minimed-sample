@@ -3,11 +3,15 @@ import type { DashboardTranslations } from './useDashboardTranslations';
 import type { InsulinDelivery } from '@/types/device';
 import { format } from 'date-fns';
 import { Zap, Droplet } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { enUS, es, fr, de } from 'date-fns/locale';
 
 export function RecentActivity({ translations, deliveries }: {
   translations: DashboardTranslations;
   deliveries: InsulinDelivery[];
 }) {
+  const { language, tSync } = useLanguage();
+  const locale = { en: enUS, es, fr, de }[language];
   return (
           <Card>
             <CardHeader>
@@ -32,7 +36,7 @@ export function RecentActivity({ translations, deliveries }: {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">
-                          {delivery.type === 'bolus' ? translations.bolus : translations.basal} {translations.delivery}
+                          {tSync(delivery.type === 'bolus' ? 'Bolus Delivery' : 'Basal Delivery')}
                         </p>
                         <p className="text-sm text-gray-500">
                           {format(delivery.timestamp, 'HH:mm')} - {delivery.amount.toFixed(1)} {translations.units}
@@ -41,7 +45,7 @@ export function RecentActivity({ translations, deliveries }: {
                       </div>
                     </div>
                     <span className="text-sm text-gray-500">
-                      {format(delivery.timestamp, 'MMM d')}
+                      {format(delivery.timestamp, 'MMM d', { locale })}
                     </span>
                   </div>
                 ))}

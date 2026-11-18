@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Activity, Droplet, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import type { DeviceStatus } from '@/types/device';
 import type { generateDailySummary } from '@/utils/mockData';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const getTrendIcon = (trend: string) => {
     switch (trend) {
@@ -30,6 +31,7 @@ export function DashboardMetrics({ dailySummary, deviceStatus, translations }: {
   deviceStatus: DeviceStatus | null;
   translations: DashboardTranslations;
 }) {
+  const { tSync } = useLanguage();
   return (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {/* Current Glucose */}
@@ -50,7 +52,7 @@ export function DashboardMetrics({ dailySummary, deviceStatus, translations }: {
                   <div className="flex flex-col items-center">
                     {dailySummary && getTrendIcon(dailySummary.currentGlucose.trend)}
                     <span className="text-xs text-gray-500 mt-1">
-                      {dailySummary?.currentGlucose.trend}
+                      {dailySummary && tSync(dailySummary.currentGlucose.trend)}
                     </span>
                   </div>
                 </div>

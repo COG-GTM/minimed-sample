@@ -4,12 +4,14 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLin
 import { format } from 'date-fns';
 import type { GlucoseReading } from '@/types/glucose';
 import type { generateDailySummary } from '@/utils/mockData';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function DashboardCharts({ glucoseReadings, dailySummary, translations }: {
   glucoseReadings: GlucoseReading[];
   dailySummary: ReturnType<typeof generateDailySummary> | null;
   translations: DashboardTranslations;
 }) {
+  const { tSync } = useLanguage();
   // Prepare chart data
   const chartData = glucoseReadings.map(reading => ({
     time: format(reading.timestamp, 'HH:mm'),
@@ -59,6 +61,7 @@ export function DashboardCharts({ glucoseReadings, dailySummary, translations }:
                     <ReferenceLine y={180} stroke="#ef4444" strokeDasharray="3 3" />
                     <ReferenceLine y={125} stroke="#10b981" strokeDasharray="3 3" />
                     <Area
+                      name={tSync('Glucose')}
                       isAnimationActive={false}
                       type="monotone"
                       dataKey="value"
