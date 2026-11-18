@@ -64,3 +64,32 @@ test('fresh protected-route navigation and reload render the sign-in page', asyn
   await expect(page.locator('#password')).toBeVisible();
   await expect(page.getByRole('heading', { name: /Welcome back/ })).toHaveCount(0);
 });
+
+test('reloading the dashboard shows a loading status until its route is ready', async ({ page }) => {
+  const welcome = page.getByRole('heading', { name: 'Welcome back, Sarah Johnson' });
+  await page.getByRole('button', { name: 'Demo Patient Account', exact: true }).click();
+  await expect(welcome).toBeVisible();
+
+  const dashboardChunk = /\/(?:assets\/Dashboard-[^/]+\.js|src\/pages\/Dashboard\.tsx)(?:\?.*)?$/;
+  const { promise, resolve } = Promise.withResolvers<void>();
+  await page.route(dashboardChunk, async (route) => {
+    await promise;
+    await route.continue();
+  });
+
+  const loading = page.getByRole('status').filter({ hasText: 'Loading MiniMed…' });
+  try {
+    await Promise.all([
+      page.waitForRequest(dashboardChunk),
+      page.reload({ waitUntil: 'domcontentloaded' }),
+    ]);
+    await expect(loading).toBeVisible();
+    await expect(welcome).toHaveCount(0);
+  } finally {
+    resolve();
+  }
+
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await expect(welcome).toBeVisible();
+  await expect(loading).toHaveCount(0);
+});

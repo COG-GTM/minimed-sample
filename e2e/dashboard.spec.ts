@@ -27,3 +27,21 @@ test('theme utilities resolve to opaque blue and navy colors', async ({ page }) 
   await expect(page.getByRole('button', { name: 'Demo Patient Account', exact: true })).toHaveCSS('border-top-color', 'rgb(11, 37, 69)');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 });
+
+test('glucose trend shows a different reading when navigated with the keyboard', async ({ page }) => {
+  await page.goto('/auth');
+  await page.getByRole('button', { name: 'Demo Patient Account', exact: true }).click();
+  const chart = page.locator('.recharts-wrapper').filter({ has: page.locator('.recharts-area-curve') });
+  const chartSurface = chart.getByRole('application');
+  const tooltip = chart.locator('.recharts-tooltip-wrapper');
+  const time = tooltip.locator('.recharts-tooltip-label');
+
+  await chartSurface.focus();
+  await expect(tooltip).toBeVisible();
+  await expect(time).toHaveText(/^\d{2}:\d{2}$/);
+  await expect(tooltip.locator('.recharts-tooltip-item-value')).toHaveText(/^\d+$/);
+  const firstTime = await time.innerText();
+  await chartSurface.press('ArrowRight');
+  await expect(time).toHaveText(/^\d{2}:\d{2}$/);
+  await expect(time).not.toHaveText(firstTime);
+});
