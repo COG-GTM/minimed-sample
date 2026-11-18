@@ -3,6 +3,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { lazy, Suspense } from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import RouteLoading from '@/components/RouteLoading';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const Auth = lazy(() => import('@/pages/Auth'));
@@ -13,7 +14,7 @@ function App() {
     <Router>
       <LanguageProvider>
         <AuthProvider>
-          <Suspense fallback={<div role="status" className="p-8 text-primary">Loading MiniMed…</div>}>
+          <Suspense fallback={<RouteLoading />}>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />

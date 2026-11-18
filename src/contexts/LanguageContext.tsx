@@ -12,6 +12,7 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
+    'app.loading': 'Loading MiniMed…',
     'nav.products': 'Products',
     'nav.support': 'Support',
     'nav.healthcare': 'Healthcare Professionals',
@@ -25,6 +26,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Mobile Connectivity',
   },
   es: {
+    'app.loading': 'Cargando MiniMed…',
     'nav.products': 'Productos',
     'nav.support': 'Soporte',
     'nav.healthcare': 'Profesionales de la Salud',
@@ -38,6 +40,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Conectividad Móvil',
   },
   fr: {
+    'app.loading': 'Chargement de MiniMed…',
     'nav.products': 'Produits',
     'nav.support': 'Support',
     'nav.healthcare': 'Professionnels de Santé',
@@ -51,6 +54,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Connectivité Mobile',
   },
   de: {
+    'app.loading': 'MiniMed wird geladen…',
     'nav.products': 'Produkte',
     'nav.support': 'Unterstützung',
     'nav.healthcare': 'Gesundheitsfachkräfte',
