@@ -18,6 +18,30 @@ test('dashboard renders populated metrics, both chart SVGs and recent deliveries
   await expect(page.getByText('Your latest insulin deliveries and glucose readings')).toBeVisible();
 });
 
+test('refreshes device metrics without changing recent deliveries', async ({ page }) => {
+  await page.clock.install();
+  await page.addInitScript(() => {
+    Math.random = () => 0.25;
+  });
+  await page.goto('/auth');
+  await page.getByRole('button', { name: 'Demo Patient Account', exact: true }).click();
+
+  const device = page.getByRole('heading', { name: 'Pump Status' }).locator('../..');
+  await expect(device.getByText('80%', { exact: true })).toBeVisible();
+
+  const deliveries = page.getByText(/^\d{2}:\d{2} - \d+\.\d units\b/);
+  await expect(deliveries).toHaveCount(5);
+  const initialDeliveries = await deliveries.allTextContents();
+
+  await page.evaluate(() => {
+    Math.random = () => 0.75;
+  });
+  await page.clock.fastForward(30_000);
+
+  await expect(device.getByText('90%', { exact: true })).toBeVisible();
+  await expect(deliveries).toHaveText(initialDeliveries);
+});
+
 test('theme utilities resolve to opaque blue and navy colors', async ({ page }) => {
   await page.goto('/auth');
   const submit = page.getByRole('button', { name: 'Sign In', exact: true });
