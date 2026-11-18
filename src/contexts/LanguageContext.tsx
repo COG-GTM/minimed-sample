@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { translationService } from '@/services/translationService';
 
 export type Language = 'en' | 'es' | 'fr' | 'de';
@@ -12,6 +12,7 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
+    'app.title': 'MiniMed Dashboard - Advanced Diabetes Management',
     'app.loading': 'Loading MiniMed…',
     'nav.products': 'Products',
     'nav.support': 'Support',
@@ -26,6 +27,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Mobile Connectivity',
   },
   es: {
+    'app.title': 'Panel MiniMed - Gestión avanzada de la diabetes',
     'app.loading': 'Cargando MiniMed…',
     'nav.products': 'Productos',
     'nav.support': 'Soporte',
@@ -40,6 +42,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Conectividad Móvil',
   },
   fr: {
+    'app.title': 'Tableau de bord MiniMed - Gestion avancée du diabète',
     'app.loading': 'Chargement de MiniMed…',
     'nav.products': 'Produits',
     'nav.support': 'Support',
@@ -54,6 +57,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Connectivité Mobile',
   },
   de: {
+    'app.title': 'MiniMed Dashboard - Fortgeschrittenes Diabetes-Management',
     'app.loading': 'MiniMed wird geladen…',
     'nav.products': 'Produkte',
     'nav.support': 'Unterstützung',
@@ -73,6 +77,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.title = translations[language]['app.title'];
+  }, [language]);
 
   const t = useCallback(async (text: string): Promise<string> => {
     if (language === 'en') {
