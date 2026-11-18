@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { translationService } from '@/services/translationService';
 
 export type Language = 'en' | 'es' | 'fr' | 'de';
@@ -12,6 +12,8 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
+    'app.title': 'MiniMed Dashboard - Advanced Diabetes Management',
+    'app.loading': 'Loading MiniMed…',
     'nav.products': 'Products',
     'nav.support': 'Support',
     'nav.healthcare': 'Healthcare Professionals',
@@ -25,6 +27,8 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Mobile Connectivity',
   },
   es: {
+    'app.title': 'Panel MiniMed - Gestión avanzada de la diabetes',
+    'app.loading': 'Cargando MiniMed…',
     'nav.products': 'Productos',
     'nav.support': 'Soporte',
     'nav.healthcare': 'Profesionales de la Salud',
@@ -38,6 +42,8 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Conectividad Móvil',
   },
   fr: {
+    'app.title': 'Tableau de bord MiniMed - Gestion avancée du diabète',
+    'app.loading': 'Chargement de MiniMed…',
     'nav.products': 'Produits',
     'nav.support': 'Support',
     'nav.healthcare': 'Professionnels de Santé',
@@ -51,6 +57,8 @@ const translations: Record<Language, Record<string, string>> = {
     'features.mobile': 'Connectivité Mobile',
   },
   de: {
+    'app.title': 'MiniMed Dashboard - Fortgeschrittenes Diabetes-Management',
+    'app.loading': 'MiniMed wird geladen…',
     'nav.products': 'Produkte',
     'nav.support': 'Unterstützung',
     'nav.healthcare': 'Gesundheitsfachkräfte',
@@ -70,15 +78,20 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
-  const t = async (text: string): Promise<string> => {
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.title = translations[language]['app.title'];
+  }, [language]);
+
+  const t = useCallback(async (text: string): Promise<string> => {
     if (language === 'en') {
       return text;
     }
     return await translationService.translate(text, language, 'en');
-  };
+  }, [language]);
 
   const tSync = (key: string): string => {
-    return translations[language][key] || key;
+    return translations[language][key] || translationService.translateSync(key, language);
   };
 
   return (
