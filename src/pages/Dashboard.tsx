@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { flushSync } from 'react-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -49,8 +48,8 @@ const Dashboard = () => {
   }, []);
 
   const handleLogout = () => {
-    flushSync(() => navigate('/'));
     logout();
+    navigate('/');
   };
 
   const sidebarItems = [
