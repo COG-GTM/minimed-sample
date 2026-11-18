@@ -65,8 +65,8 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-gradient-medtronic shadow-md">
-        <div className="flex items-center justify-between px-4 h-20">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between gap-1 px-2 sm:px-4 h-20">
+          <div className="flex min-w-0 items-center gap-1 sm:gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="lg:hidden p-2 hover:bg-white/20 rounded-lg text-white"
@@ -74,26 +74,26 @@ const Dashboard = () => {
               <Menu className="h-5 w-5" />
             </button>
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span> Dashboard</span>
+              <span className="text-lg sm:text-2xl font-bold text-white">MiniMed<span className="text-xs align-super">™</span><span className="hidden sm:inline"> Dashboard</span></span>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <LanguageDropdown className="text-white hover:bg-white/20 hover:text-white" />
+          <div className="flex shrink-0 items-center gap-0 sm:gap-4">
+            <LanguageDropdown className="px-1 sm:px-3 text-white hover:bg-white/20 hover:text-white" />
             
-            <button className="relative p-2 hover:bg-white/20 rounded-lg">
+            <button className="relative hidden sm:block p-2 hover:bg-white/20 rounded-lg">
               <Bell className="h-5 w-5 text-white" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-medtronic-coral rounded-full"></span>
             </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-white hover:bg-white/20">
+                <Button variant="ghost" aria-label={user?.name} className="flex items-center gap-1 px-1 sm:px-4 text-white hover:bg-white/20">
                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                     <User className="h-4 w-4 text-medtronic-deepPurple" />
                   </div>
                   <span className="hidden md:inline">{user?.name}</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="hidden sm:block h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
@@ -151,7 +151,7 @@ const Dashboard = () => {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main className="min-w-0 flex-1 p-4 lg:p-6">
           {/* Welcome Message */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900">

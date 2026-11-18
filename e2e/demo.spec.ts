@@ -27,3 +27,18 @@ for (const demo of [
     await expect(page).toHaveURL(/\/auth$/);
   });
 }
+
+test('dashboard fits narrow mobile viewports', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/auth');
+  await page.getByRole('button', { name: 'Demo Patient Account', exact: true }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  for (const width of [375, 320, 430]) {
+    await page.setViewportSize({ width, height: 812 });
+    await expect.poll(() => page.evaluate(() =>
+      document.documentElement.scrollWidth <= document.documentElement.clientWidth
+    )).toBe(true);
+    await expect(page.getByRole('button', { name: 'Sarah Johnson' })).toBeInViewport();
+  }
+  await page.screenshot({ path: 'test-results/mobile-dashboard.png', fullPage: true });
+});
