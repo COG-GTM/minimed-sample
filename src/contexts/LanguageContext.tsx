@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { translationService } from '@/services/translationService';
 
 export type Language = 'en' | 'es' | 'fr' | 'de';
@@ -70,12 +70,12 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
-  const t = async (text: string): Promise<string> => {
+  const t = useCallback(async (text: string): Promise<string> => {
     if (language === 'en') {
       return text;
     }
     return await translationService.translate(text, language, 'en');
-  };
+  }, [language]);
 
   const tSync = (key: string): string => {
     return translations[language][key] || key;

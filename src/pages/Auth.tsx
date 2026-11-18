@@ -79,7 +79,7 @@ const Auth = () => {
     try {
       await login(formData);
       navigate('/dashboard');
-    } catch (err) {
+    } catch {
       const errorMsg = await t('Invalid email or password. Try patient@example.com / demo123');
       setError(errorMsg);
     } finally {
@@ -98,7 +98,7 @@ const Auth = () => {
     try {
       await login(credentials);
       navigate('/dashboard');
-    } catch (err) {
+    } catch {
       const errorMsg = await t('Login failed. Please try again.');
       setError(errorMsg);
     } finally {

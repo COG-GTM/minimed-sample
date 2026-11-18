@@ -1,53 +1,101 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-medtronic-deepPurple: #0b2545;
+  --color-medtronic-purple: #174b78;
+  --color-medtronic-brightBlue: #075fcb;
+  --color-medtronic-skyBlue: #7dd3fc;
+  --color-medtronic-lightCyan: #e0f2fe;
+  --color-medtronic-coral: #0369a1;
+  --color-medtronic-peach: #bae6fd;
+  --color-medical-blue: #075fcb;
+  --color-medical-lightBlue: #38bdf8;
+  --color-medical-green: #059669;
+  --color-medical-orange: #0369a1;
+  --color-medical-red: #dc2626;
+  --font-sans: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  --background-image-gradient-medtronic: linear-gradient(135deg, #0b2545, #075fcb);
+  --background-image-gradient-minimed: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  max-width: 1400px;
+}
 
 @layer base {
   :root {
     /* Medtronic/MiniMed inspired color scheme */
     --background: 0 0% 100%;
-    --foreground: 249 100% 13%; /* Deep purple text */
+    --foreground: 215 100% 13%; /* Navy text */
     --card: 0 0% 100%;
-    --card-foreground: 249 100% 13%;
+    --card-foreground: 215 100% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 249 100% 13%;
-    --primary: 240 93% 49%; /* Bright blue */
+    --popover-foreground: 215 100% 13%;
+    --primary: 214 93% 49%; /* Bright blue */
     --primary-foreground: 0 0% 100%;
     --secondary: 197 71% 73%; /* Sky blue */
-    --secondary-foreground: 249 100% 13%;
+    --secondary-foreground: 215 100% 13%;
     --muted: 200 100% 95%; /* Light cyan */
-    --muted-foreground: 249 50% 30%;
-    --accent: 16 100% 66%; /* Coral */
+    --muted-foreground: 215 50% 30%;
+    --accent: 201 96% 32%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     --border: 200 30% 90%;
     --input: 200 30% 90%;
-    --ring: 240 93% 49%;
+    --ring: 214 93% 49%;
     --radius: 0.75rem;
   }
 
   .dark {
-    /* Dark mode with Medtronic purple theme */
-    --background: 249 100% 8%; /* Very dark purple */
+    /* Dark mode with Medtronic blue theme */
+    --background: 215 100% 8%; /* Very dark navy */
     --foreground: 0 0% 95%;
-    --card: 249 80% 12%;
+    --card: 215 80% 12%;
     --card-foreground: 0 0% 95%;
-    --popover: 249 80% 12%;
+    --popover: 215 80% 12%;
     --popover-foreground: 0 0% 95%;
-    --primary: 240 93% 60%; /* Brighter blue for dark mode */
-    --primary-foreground: 249 100% 8%;
+    --primary: 214 93% 60%; /* Brighter blue for dark mode */
+    --primary-foreground: 215 100% 8%;
     --secondary: 197 71% 73%;
-    --secondary-foreground: 249 100% 8%;
-    --muted: 249 50% 20%;
+    --secondary-foreground: 215 100% 8%;
+    --muted: 215 50% 20%;
     --muted-foreground: 200 30% 70%;
-    --accent: 16 100% 66%;
-    --accent-foreground: 249 100% 8%;
+    --accent: 201 96% 32%;
+    --accent-foreground: 215 100% 8%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 95%;
-    --border: 249 50% 25%;
-    --input: 249 50% 25%;
-    --ring: 240 93% 60%;
+    --border: 215 50% 25%;
+    --input: 215 50% 25%;
+    --ring: 214 93% 60%;
   }
 }
 

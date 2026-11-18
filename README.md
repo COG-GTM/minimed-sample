@@ -33,12 +33,37 @@ Based on analysis of Medtronic's CareLink platform and MiniMed systems:
 ## Architecture
 
 ### Technology Stack
-- **Frontend**: React with TypeScript
-- **Styling**: Tailwind CSS with shadcn/ui components
+- **Frontend**: React 19 with strict TypeScript 5.9 project references
+- **Build**: Vite 8 with the React plugin; Node.js 22 (`nvm use`)
+- **Styling**: Tailwind CSS 4 via @tailwindcss/vite, CSS-first blue theme, tw-animate-css and Radix UI
 - **State Management**: React Context/Hooks
-- **Routing**: React Router
-- **Charts**: Recharts for data visualization
+- **Routing**: React Router 7 with lazy-loaded pages and protected dashboard
+- **Charts**: Recharts 3, date-fns 4
 - **Icons**: Lucide React
+- **Quality**: ESLint 9 flat config, typescript-eslint 8, Vitest, Testing Library, jsdom and Playwright Chromium
+
+### Scripts
+
+Run `nvm use && npm ci` before development.
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Vite development server |
+| `npm run build` | TypeScript project build (`tsc -b`) and production bundle |
+| `npm run preview` | Serve the production bundle |
+| `npm run lint` | ESLint with zero warnings |
+| `npm run typecheck` | Strict TypeScript project checks |
+| `npm test` | Unit and component tests |
+| `npm run test:e2e` | Playwright Chromium flows against the production preview |
+
+Before e2e, run `npm run build && npx playwright install chromium` (Linux CI uses `--with-deps`).
+CI runs all checks and uploads browser evidence. Dashboard components live in
+`src/features/dashboard/`; translations and the demo data service remain shared.
+The existing translation automation suite and Devin UI webhook workflow are unchanged.
+The auth input IDs (`email`, `password`, `remember`) and chart gradient ID (`colorGlucose`) are preserved.
+
+This remains a mock medical dashboard, not a clinical system. Demo credentials are
+`patient@example.com / demo123` and `doctor@example.com / demo123`.
 
 ### Page Structure
 1. **Landing Page** (`/`)
