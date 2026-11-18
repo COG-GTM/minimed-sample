@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { DashboardTranslations } from './useDashboardTranslations';
-import type { InsulinDelivery } from '@/types/insulin';
+import type { InsulinDelivery } from '@/types/device';
 import { format } from 'date-fns';
 import { Zap, Droplet } from 'lucide-react';
 
