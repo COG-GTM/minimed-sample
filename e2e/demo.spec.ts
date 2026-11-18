@@ -20,6 +20,7 @@ for (const demo of [
     await page.screenshot({ path: `test-results/${demo.name}-spanish.png`, fullPage: true });
     await page.getByRole('button', { name: demo.name }).click();
     await page.getByRole('menuitem', { name: 'Sign out' }).click();
+    await expect(page).toHaveURL('/');
     await expect(page.getByRole('heading', { name: /Welcome back/ })).toHaveCount(0);
     await expect.poll(() => page.evaluate(() => localStorage.getItem('minimedUser'))).toBeNull();
     await page.goto('/dashboard');
