@@ -36,6 +36,25 @@ test('invalid credentials show an error and re-enable sign-in', async ({ page })
   expect(await page.evaluate(() => localStorage.getItem('minimedUser'))).toBeNull();
 });
 
+test('the localized sign-in form disables inputs while credentials are checked', async ({ page }) => {
+  await page.getByRole('button', { name: /English/ }).click();
+  await page.getByRole('menuitem', { name: 'Español' }).click();
+  const email = page.locator('#email');
+  const password = page.locator('#password');
+  await email.fill('patient@example.com');
+  await password.fill('demo123');
+  const now = new Date();
+  await page.clock.install({ time: now });
+  await page.clock.pauseAt(new Date(now.getTime() + 60_000));
+  await page.getByRole('button', { name: 'Iniciar Sesión', exact: true }).click();
+
+  await expect(page.getByRole('button', { name: 'Iniciando sesión...', exact: true })).toBeDisabled();
+  await expect(email).toBeDisabled();
+  await expect(password).toBeDisabled();
+  await page.clock.resume();
+  await expect(page).toHaveURL('/dashboard');
+});
+
 for (const account of [
   { email: 'patient@example.com', name: 'Sarah Johnson', role: 'patient' },
   { email: 'doctor@example.com', name: 'Dr. Michael Chen', role: 'healthcare_provider' },
