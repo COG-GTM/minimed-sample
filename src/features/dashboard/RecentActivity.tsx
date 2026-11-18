@@ -4,14 +4,16 @@ import type { InsulinDelivery } from '@/types/device';
 import { format } from 'date-fns';
 import { Zap, Droplet } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { enUS, es, fr, de } from 'date-fns/locale';
 
 export function RecentActivity({ translations, deliveries }: {
   translations: DashboardTranslations;
   deliveries: InsulinDelivery[];
 }) {
   const { language, tSync } = useLanguage();
-  const locale = { en: enUS, es, fr, de }[language];
+  const dateFormatter = new Intl.DateTimeFormat(language === 'en' ? 'en-US' : language, {
+    month: 'short',
+    day: 'numeric',
+  });
   return (
           <Card>
             <CardHeader>
@@ -45,7 +47,7 @@ export function RecentActivity({ translations, deliveries }: {
                       </div>
                     </div>
                     <span className="text-sm text-gray-500">
-                      {format(delivery.timestamp, 'MMM d', { locale })}
+                      {dateFormatter.format(delivery.timestamp)}
                     </span>
                   </div>
                 ))}

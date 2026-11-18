@@ -9,9 +9,9 @@ test('recent activity advances across midnight on the dashboard tick, not a lang
   await expect(page.getByText('Nov 18', { exact: true })).toHaveCount(5);
   await page.getByRole('button', { name: /English/ }).click();
   await page.getByRole('menuitem', { name: /Español/ }).click();
-  await expect(page.getByText('nov 18', { exact: true })).toHaveCount(5);
+  await expect(page.getByText('18 nov', { exact: true })).toHaveCount(5);
   await page.clock.fastForward(90_000);
-  await expect(page.getByText('nov 19', { exact: true })).toHaveCount(5);
-  await expect(page.getByText('nov 18', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('19 nov', { exact: true })).toHaveCount(5);
+  await expect(page.getByText('18 nov', { exact: true })).toHaveCount(0);
   await expect(page.getByText(/^(Administración de bolo|Entrega Basal)$/)).toHaveCount(5);
 });

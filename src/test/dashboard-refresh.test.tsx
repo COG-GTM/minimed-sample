@@ -25,7 +25,7 @@ it('refreshes activity across midnight on the dashboard tick, not on language ch
     expect(deliveries).toHaveBeenCalledTimes(1);
     await act(async () => vi.advanceTimersByTime(30000));
     expect(deliveries).toHaveBeenCalledTimes(2);
-    expect(screen.getAllByText('nov 19')).toHaveLength(5);
+    expect(screen.getAllByText('19 nov')).toHaveLength(5);
   } finally {
     deliveries.mockRestore();
     vi.useRealTimers();
